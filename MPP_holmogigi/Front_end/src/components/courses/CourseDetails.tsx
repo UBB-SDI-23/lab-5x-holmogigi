@@ -1,29 +1,25 @@
-﻿import { Card, CardActions, CardContent, IconButton } from "@mui/material";
+import { Card, CardActions, CardContent, IconButton } from "@mui/material";
 import { Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
-import { Bodybuilder } from "../../models/BodybuilderRole";
+import { Bodybuilder } from "../../models/Bodybuilder";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export const CourseDetails = () => {
-	const { employeeId } = useParams();
+	const { courseId } = useParams();
 	const [course, setCourse] = useState<Bodybuilder>();
 
 	useEffect(() => {
-		const fetchCourse = async () =>
-		{
-			// TODO: use axios instead of fetch
-			// TODO: handle errors
-			// TODO: handle loading state
-			const response = await fetch(`${BACKEND_API_URL}/api/BodyBuilders/${employeeId}`);
+		const fetchCourse = async () => {
+			const response = await fetch(`${BACKEND_API_URL}/api/BodyBuilders/${courseId}`);
 			const course = await response.json();
 			setCourse(course);
 		};
 		fetchCourse();
-	}, [employeeId]);
+	}, [courseId]);
 
 	return (
 		<Container>
@@ -40,11 +36,11 @@ export const CourseDetails = () => {
 					<p>Bd division: {course?.Division}</p>
 				</CardContent>
 				<CardActions>
-					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${employeeId}/edit`}>
+					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${courseId}/edit`}>
 						<EditIcon />
 					</IconButton>
 
-					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${employeeId}/delete`}>
+					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${courseId}/delete`}>
 						<DeleteForeverIcon sx={{ color: "red" }} />
 					</IconButton>
 				</CardActions>

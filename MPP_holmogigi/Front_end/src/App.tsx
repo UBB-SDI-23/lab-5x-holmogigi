@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,10 +8,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AppHome } from "./components/AppHome";
 import { AppMenu } from "./components/AppMenu";
-import { AllEmployees } from "./components/bds/AllBds";
-import { CourseDetails } from "./components/bds/DetailBds";
-//import { CourseDelete } from "./components/courses/CourseDelete";
-import { CourseAdd } from "./components/bds/AddBds";
+import { AllCourses } from "./components/courses/AllCourses";
+import { CourseDetails } from "./components/courses/CourseDetails";
+import { CourseDelete } from "./components/courses/CourseDelete";
+import { CourseAdd } from "./components/courses/CourseAdd";
 
 function App() {
 	return (
@@ -21,13 +21,11 @@ function App() {
 
 				<Routes>
 					<Route path="/" element={<AppHome />} />
-					<Route path="/courses" element={<AllEmployees />} />
-
-					<Route path="/employees/:employeeId/details"
-						element={<CourseDetails />}
-					/>
-
-					<Route path="/employees/add" element={<CourseAdd />} />
+					<Route path="/courses" element={<AllCourses />} />
+					<Route path="/courses/:courseId/details" element={<CourseDetails />} />
+					<Route path="/courses/:courseId/edit" element={<CourseDetails />} />
+					<Route path="/courses/:courseId/delete" element={<CourseDelete />} />
+					<Route path="/courses/add" element={<CourseAdd />} />
 				</Routes>
 			</Router>
 		</React.Fragment>

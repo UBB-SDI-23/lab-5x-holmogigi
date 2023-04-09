@@ -24,30 +24,6 @@ import AddIcon from "@mui/icons-material/Add";
 export const AllEmployees = () => {
     const [loading, setLoading] = useState(false);
     const [employees, setEmployees] = useState<Bodybuilder[]>([]);
-    const [sorting, setSorting] = useState({
-        key: "Name",
-        ascending: true,
-    });
-
-    function applySorting(key: string, ascending: boolean) {
-        setSorting({ key: key, ascending: ascending });
-    }
-
-    useEffect(() => {
-        if (employees.length === 0) {
-            return;
-        }
-
-        const currentEmployees = [...employees];
-
-        const sortedCurrentUsers = currentEmployees.sort((a, b) => {
-            return a[sorting.key].localeCompare(b[sorting.key]);
-        });
-
-        setEmployees(
-            sorting.ascending ? sortedCurrentUsers : sortedCurrentUsers.reverse()
-        );
-    }, [sorting]);
 
     useEffect(() => {
         setLoading(true);
@@ -57,12 +33,13 @@ export const AllEmployees = () => {
                 setEmployees(data);
                 setLoading(false);
             });
-    }, []);
+    }, []); // Update the dependency array to be an empty array
+
 
     return (
         <Container>
             <h1>All employees</h1>
-
+            
             {loading && <CircularProgress />}
             {!loading && employees.length === 0 && <p>No employees found</p>}
             {!loading && (
@@ -90,7 +67,7 @@ export const AllEmployees = () => {
                         </TableHead>
                         <TableBody>
                             {employees.map((employee, index) => (
-                                <TableRow key={employee.id}>
+                                <TableRow key={employee.Id}>
                                     <TableCell component="th" scope="row">
                                         {index + 1}
                                     </TableCell>
@@ -103,7 +80,7 @@ export const AllEmployees = () => {
                                         <IconButton
                                             component={Link}
                                             sx={{ mr: 3 }}
-                                            to={`/employees/${employee.id}/details`}
+                                            to={`/employees/${employee.Id}/details`}
                                         >
                                             <Tooltip title="View employee details" arrow>
                                                 <ReadMoreIcon color="primary" />
@@ -114,7 +91,7 @@ export const AllEmployees = () => {
                                         <IconButton
                                             component={Link}
                                             sx={{ mr: 3 }}
-                                            to={`/employees/${employee.id}/edit`}
+                                            to={`/employees/${employee.Id}/edit`}
                                         >
                                             <EditIcon />
                                         </IconButton>
@@ -123,7 +100,7 @@ export const AllEmployees = () => {
                                         <IconButton
                                             component={Link}
                                             sx={{ mr: 3 }}
-                                            to={`/employees/${employee.id}/delete`}
+                                            to={`/employees/${employee.Id}/delete`}
                                         >
                                             <DeleteForeverIcon sx={{ color: "red" }} />
                                         </IconButton>

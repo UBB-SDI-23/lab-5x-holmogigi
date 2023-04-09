@@ -28,14 +28,14 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseSwaggerUI(c=>
+app.UseSwaggerUI
+(c=>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bodybuilder API");
     c.RoutePrefix = string.Empty;
 }
 );
-
-
+    
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("corsapp");
