@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RqMLCwizl8CZc/dL5ahV4YRzf1BpsvfE2QgIIV76PERIGMe+/cg9u46FIfZNpr+QJ2hfEpTzq2HiOnjm+dJKVA==",
+  "dgSpecHash": "X/7wyf1Dx0W2SVdFKtY0PMNo5WbsUU3ceD0PlzcTptKgD6Zn2B9q2rMmX7iIMgKc1AKnyHfcGDZOyQdcuJI1gA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\MPP.csproj",
+  "projectFilePath": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\MPP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

@@ -12540,11 +12540,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\MPP.csproj",
+      "projectUniqueName": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\MPP.csproj",
       "projectName": "MPP",
-      "projectPath": "C:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\MPP.csproj",
+      "projectPath": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\MPP.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\obj\\",
+      "outputPath": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
