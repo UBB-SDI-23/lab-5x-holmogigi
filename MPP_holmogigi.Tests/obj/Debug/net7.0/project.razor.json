@@ -1,0 +1,20 @@
+{
+  "SerializedFilePath": "c:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi.Tests\\obj\\Debug\\net7.0\\project.razor.json",
+  "FilePath": "c:\\Users\\USER\\OneDrive\\Desktop\\UBB FMI\\SEM 4\\SDI\\MPP_holmogigi\\MPP_holmogigi.Tests\\MPP.Tests.csproj",
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  },
+  "ProjectWorkspaceState": {
+    "TagHelpers": [],
+    "CSharpLanguageVersion": 1100
+  },
+  "RootNamespace": null,
+  "Documents": [],
+  "SerializationFormat": "0.3"
+}

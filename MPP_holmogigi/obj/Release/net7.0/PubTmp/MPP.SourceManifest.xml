@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\USER\OneDrive\Desktop\UBB FMI\SEM 4\SDI\MPP_holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\USER\OneDrive\Desktop\UBB FMI\SEM 4\SDI\MPP_holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\EFSQLScripts\MPP.Database.BodyBuildersDatabasesContext.sql" />
+</sitemanifest>

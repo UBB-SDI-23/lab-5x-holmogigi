@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/ccf223b6-c21b-4294-8a85-88608261a0f9/resourceGroups/AzureStudents/providers/Microsoft.Web/sites/bodybuilders",
+    "appService.deploySubpath": "MPP_holmogigi\\bin\\Release\\net7.0\\publish"
+}
