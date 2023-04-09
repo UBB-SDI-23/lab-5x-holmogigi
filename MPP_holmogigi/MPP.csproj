@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="FRONTEND\my-app\src\assets\" />
     <Folder Include="_Diagrams\" />
   </ItemGroup>
 

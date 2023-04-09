@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="IIS Web Application Name" description="" value="MPP20230409123420" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\USER\\OneDrive\\Desktop\\UBB\ FMI\\SEM\ 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\UBB\ FMI\\SEM\ 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
   </parameter>
   <parameter name="MPP.Database.BodyBuildersDatabasesContext" description="" value="Data Source=tcp:mppdbserver12.database.windows.net,1433;Initial Catalog=MPP_db;User Id=holmogigi@mppdbserver12;Password=Password.12" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\USER\\OneDrive\\Desktop\\UBB\ FMI\\SEM\ 4\\SDI\\MPP_holmogigi\\MPP_holmogigi\\obj\\Release\\net7\.0\\PubTmp\\EFSQLScripts\\MPP\.Database\.BodyBuildersDatabasesContext\.sql$" />
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^D:\\UBB\ FMI\\SEM\ 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\obj\\Release\\net7\.0\\PubTmp\\EFSQLScripts\\MPP\.Database\.BodyBuildersDatabasesContext\.sql$" />
   </parameter>
 </parameters>

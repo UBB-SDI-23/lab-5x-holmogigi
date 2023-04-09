@@ -1234,3 +1234,11 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Debug\net7.0\refint\MPP.
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Debug\net7.0\MPP.pdb
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Debug\net7.0\MPP.genruntimeconfig.cache
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Debug\net7.0\ref\MPP.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\build\asset-manifest.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\build\manifest.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\package-lock.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\package.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\public\manifest.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\tsconfig.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\tsconfig.node.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\FRONTEND\my-app\dist\manifest.json

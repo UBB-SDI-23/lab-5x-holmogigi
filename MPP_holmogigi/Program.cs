@@ -20,6 +20,11 @@ builder.Services.ConfigureSwaggerGen(setup =>
 });
 
 builder.Services.AddDbContext<BodyBuildersDatabasesContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -32,6 +37,8 @@ app.UseSwaggerUI(c=>
 
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("corsapp");
 app.UseAuthorization();
 app.MapControllers();
 
