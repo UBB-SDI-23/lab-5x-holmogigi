@@ -33,7 +33,7 @@ export const CourseAdd = () => {
 		event.preventDefault();
 		try {
 			await axios.post(`${BACKEND_API_URL}/api/BodyBuilders`, course);
-			navigate("/api/BodyBuilders");
+			navigate("/courses");
 		} catch (error) {
 			console.log(error);
 		}

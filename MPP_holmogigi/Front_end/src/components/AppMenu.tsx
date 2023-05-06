@@ -33,6 +33,64 @@ export const AppMenu = () => {
 						startIcon={<LocalLibraryIcon />}>
 						Bodybuilders
 					</Button>
+					<Button
+						variant={path.startsWith("/coaches") ? "outlined" : "text"}
+						to="/coaches"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Coaches
+					</Button>
+					<Button
+						variant={path.startsWith("/gyms") ? "outlined" : "text"}
+						to="/gyms"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Gyms
+					</Button>
+					<Button
+						variant={path.startsWith("/contests") ? "outlined" : "text"}
+						to="/contests"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Contests
+					</Button>
+
+
+					<Button
+						variant={path.startsWith("/filterAge") ? "outlined" : "text"}
+						to="/filterAge"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Input Filter By Age
+					</Button>
+
+					<Button
+						variant={path.startsWith("/gymMinAge") ? "outlined" : "text"}
+						to="/gymMinAge"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Gym Coaches average age
+					</Button>
+
+					<Button
+						variant={path.startsWith("/gymOrderSmall") ? "outlined" : "text"}
+						to="/gymOrderSmall"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Gym couches youngest
+					</Button>
 				</Toolbar>
 			</AppBar>
 		</Box>

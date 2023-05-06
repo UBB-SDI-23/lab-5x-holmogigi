@@ -28,6 +28,16 @@ namespace MPP.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet("{page}/{pageSize}")]
+        public async Task<ActionResult<IEnumerable<GymDTO>>> GetAllPages(int page = 0, int pageSize = 10)
+        {
+            return await _dbContext.Gyms
+                .Select(x => GymToDTO(x))
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Gym>> GetById(int id)
         {
@@ -131,8 +141,8 @@ namespace MPP.Controllers
         }
 
 
-        [HttpGet("order")]
-        public async Task<ActionResult<IEnumerable<Gym>>> GetGymAverageAge()
+        [HttpGet("order/{page}/{pageSize}")]
+        public async Task<ActionResult<IEnumerable<Gym>>> GetGymAverageAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
                 return NotFound();
@@ -146,6 +156,8 @@ namespace MPP.Controllers
                 })
                 .OrderByDescending(g => g.AvgCoachAge)
                 .Select(g => g.Gym)
+                .Skip(page * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             if (GymOrderedByAge == null)
@@ -154,8 +166,8 @@ namespace MPP.Controllers
             return GymOrderedByAge;
         }
 
-        [HttpGet("MinCoachAge")]
-        public async Task<ActionResult<IEnumerable<Gym>>> GetGymMiniAge()
+        [HttpGet("MinCoachAge/{page}/{pageSize}")]
+        public async Task<ActionResult<IEnumerable<Gym>>> GetGymMiniAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
                 return NotFound();
@@ -167,8 +179,10 @@ namespace MPP.Controllers
                     Gym = g,
                     MinCoachAge = g.Coaches.Min(c => c.Age)
                 })
-                .OrderByDescending(g => g.MinCoachAge)
+                .OrderBy(g => g.MinCoachAge)
                 .Select(g => g.Gym)
+                .Skip(page * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             if (GymOrderedByAge == null)

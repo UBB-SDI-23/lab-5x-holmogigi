@@ -601,14 +601,6 @@ C:\Users\USER\OneDrive\Desktop\UBB FMI\SEM 4\SDI\MPP_holmogigi\MPP_holmogigi\bin
 C:\Users\USER\OneDrive\Desktop\UBB FMI\SEM 4\SDI\MPP_holmogigi\MPP_holmogigi\bin\Release\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\appsettings.Development.json
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\appsettings.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\build\asset-manifest.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\build\manifest.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\dist\manifest.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\package-lock.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\package.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\public\manifest.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\tsconfig.json
-D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\FRONTEND\my-app\tsconfig.node.json
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\MPP.exe
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\MPP.deps.json
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\MPP.runtimeconfig.json
@@ -925,3 +917,7 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\refint\MP
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\MPP.pdb
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\MPP.genruntimeconfig.cache
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\ref\MPP.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\package-lock.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\package.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\tsconfig.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\tsconfig.node.json

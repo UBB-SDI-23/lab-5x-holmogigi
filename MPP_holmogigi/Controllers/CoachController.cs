@@ -18,6 +18,15 @@ namespace MPP.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("{page}/{pageSize}")]
+        public async Task<ActionResult<IEnumerable<CoachDTO>>> GetAllPages(int page = 0, int pageSize = 10)
+        {
+            return await _dbContext.Coaches.Select(x => CoachToDTO(x))
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CoachDTO>>> GetAll()
         {    

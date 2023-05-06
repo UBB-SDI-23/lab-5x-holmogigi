@@ -29,11 +29,11 @@ export const CourseDetails = () => {
 						<ArrowBackIcon />
 					</IconButton>{" "}
 					<h1>Bodybuilder Details</h1>
-					<p>Bd Name: {course?.Name}</p>
-					<p>Bd age: {course?.Age}</p>
-					<p>Bd weight: {course?.Weight}</p>
-					<p>Bd height: {course?.Height}</p>
-					<p>Bd division: {course?.Division}</p>
+					<p>Bd Name: {course?.name}</p>
+					<p>Bd age: {course?.age}</p>
+					<p>Bd weight: {course?.weight}</p>
+					<p>Bd height: {course?.height}</p>
+					<p>Bd division: {course?.division}</p>
 				</CardContent>
 				<CardActions>
 					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${courseId}/edit`}>

@@ -1,8 +1,9 @@
 ﻿export interface Bodybuilder {
     id?: number;
-    Name: string;
-    Age: number;
-    Weight: number;
-    Height: number;
-    Division: string;
+    name: string;
+    age: number;
+    weight: number;
+    height: number;
+    division: string;
+    [key: string]: any;
 }

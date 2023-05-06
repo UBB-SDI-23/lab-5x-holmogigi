@@ -2,6 +2,7 @@
 {
     public class ContestDTO
     {
+        public DateTime? DateTime { get; set; }
         public string? Name { get; set; }
 
         public string? Location { get; set; }

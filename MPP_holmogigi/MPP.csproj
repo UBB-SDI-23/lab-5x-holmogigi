@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FRONTEND\**" />
+    <Content Remove="FRONTEND\**" />
+    <EmbeddedResource Remove="FRONTEND\**" />
+    <None Remove="FRONTEND\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\USER\.nuget\packages\mysql.data.entityframework\8.0.32\contentFiles\any\netstandard2.1\app.config.transform" />
     <Content Remove="C:\Users\USER\.nuget\packages\mysql.data.entityframework\8.0.32\contentFiles\any\netstandard2.1\web.config.transform" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Faker.Net" Version="2.0.154" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.4" />
@@ -36,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FRONTEND\my-app\src\assets\" />
     <Folder Include="_Diagrams\" />
   </ItemGroup>
 

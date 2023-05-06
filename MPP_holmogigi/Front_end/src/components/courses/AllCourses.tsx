@@ -10,6 +10,8 @@ import {
 	Container,
 	IconButton,
 	Tooltip,
+    Button,
+    TextField,
 } from "@mui/material";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -25,6 +27,41 @@ export const AllCourses = () => {
 	const [loading, setLoading] = useState(false);
 	const [courses, setCourses] = useState<Bodybuilder[]>([]);
 
+	const pageSize = 5;
+	const [pageIndex, setPageIndex] = useState(0);
+	const [hasNextPage, setHasNextPage] = useState(true);
+
+	const [sorting, setSorting] = useState({
+		key: "name",
+		ascending: true,
+	});
+
+	function applySorting(key: string, ascending: boolean) {
+		setSorting({ key: key, ascending: ascending });
+	}
+
+	useEffect(() => {
+		if (courses.length === 0) {
+			return;
+		}
+
+		const currentEmployees = [...courses];
+
+		const sortedCurrentUsers = currentEmployees.sort((a, b) => {
+			return a[sorting.key].localeCompare(b[sorting.key]);
+		});
+
+		setCourses(
+			sorting.ascending ? sortedCurrentUsers : sortedCurrentUsers.reverse()
+		);
+	}, [sorting]);
+
+
+	function fetchBodybuilders(page: number): Promise<Bodybuilder[]> {
+		return fetch(`${BACKEND_API_URL}/api/BodyBuilders/${page}/${pageSize}`).then((response) => response.json());
+	}
+
+	/*
 	useEffect(() => {
 		setLoading(true);
 		fetch(`${BACKEND_API_URL}/api/BodyBuilders`)
@@ -34,6 +71,49 @@ export const AllCourses = () => {
 				setLoading(false);
 			});
 	}, []);
+	*/
+
+	useEffect(() => {
+		setLoading(true);
+
+		// TODO: fix redundant request
+		fetchBodybuilders(pageIndex)
+			.then((data) => {
+				setCourses(data);
+			})
+			.then(() => {
+				fetchBodybuilders(pageIndex + 1).then((data) => {
+					setHasNextPage(data.length > 0);
+					setLoading(false);
+				});
+			});
+	}, [pageIndex, pageSize]);
+
+
+	function handleNextPage() {
+		setPageIndex((prevPageIndex) => prevPageIndex + 1);
+	}
+
+	function handlePrevPage() {
+		setPageIndex((prevPageIndex) => prevPageIndex - 1);
+	}
+
+	function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+		// TODO: this function
+		const value = event.target.value;
+		const intValue = parseInt(value, 10);
+
+		if (intValue > 0) {
+			setPageIndex(intValue - 1);
+		}
+	}
+
+	function handleInputKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+		// TODO: this function
+		if (event.key === "Enter") {
+			setPageIndex(0);
+		}
+	}
 
 
 	return (
@@ -41,7 +121,7 @@ export const AllCourses = () => {
 			<h1>All bodybuilders</h1>
 
 			{loading && <CircularProgress />}
-			{!loading && courses.length === 0 && <p>No bodybuilders found</p>}
+			{!loading && courses.length === 0 && <p> No bodybuilders found</p>}
 			{!loading && (
 				<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/add`}>
 					<Tooltip title="Add a new bodybuilder" arrow>
@@ -55,30 +135,37 @@ export const AllCourses = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell>#</TableCell>
-								<TableCell align="left">Name</TableCell>
+								<TableCell
+									align="left"
+									style={{ cursor: "pointer" }}
+									onClick={() => applySorting("name", !sorting.ascending)}
+								>
+								 Name
+								</TableCell>
 								<TableCell align="left">Age</TableCell>
 								<TableCell align="left">Weight</TableCell>
 								<TableCell align="left">Height</TableCell>
 								<TableCell align="left">Division</TableCell>
+	
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{courses.map((course, index) => (
 								<TableRow key={course.id}>
 									<TableCell component="th" scope="row">
-										{index + 1}
+										{pageIndex * pageSize + index + 1}
 									</TableCell>
-									<TableCell align="right">{course.Name}</TableCell>
-									<TableCell align="right">{course.Age}</TableCell>
-									<TableCell align="right">{course.Weight}</TableCell>
-									<TableCell align="right">{course.Height}</TableCell>
-									<TableCell align="right">{course.Division}</TableCell>
-									<TableCell align="right">
+									<TableCell align="left">{course.name}</TableCell>
+									<TableCell align="left">{course.age}</TableCell>
+									<TableCell align="left">{course.weight}</TableCell>
+									<TableCell align="left">{course.height}</TableCell>
+									<TableCell align="left">{course.division}</TableCell>
+									
 										<IconButton
 											component={Link}
 											sx={{ mr: 3 }}
 											to={`/courses/${course.id}/details`}>
-											<Tooltip title="View course details" arrow>
+											<Tooltip title="View bodybuilder details" arrow>
 												<ReadMoreIcon color="primary" />
 											</Tooltip>
 										</IconButton>
@@ -90,13 +177,61 @@ export const AllCourses = () => {
 										<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${course.id}/delete`}>
 											<DeleteForeverIcon sx={{ color: "red" }} />
 										</IconButton>
-									</TableCell>
+									
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				</TableContainer>
 			)}
+			{!loading && (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						marginTop: 16,
+					}}
+				>
+					<Button
+						variant="contained"
+						onClick={handlePrevPage}
+						disabled={pageIndex === 0}
+					>
+						&lt;
+					</Button>
+					<p
+						style={{
+							marginLeft: 16,
+							marginRight: 8,
+						}}
+					>
+					</p>
+					<TextField
+						value={pageIndex + 1}
+						type="text"
+						inputProps={{ min: 1, style: { textAlign: "center" } }}
+						onChange={handleInputChange}
+						onKeyPress={handleInputKeyPress}
+						variant="outlined"
+						size="small"
+						style={{
+							width: 100,
+							marginRight: 16,
+						}}
+					/>
+					<Button
+						variant="contained"
+						onClick={handleNextPage}
+						disabled={!hasNextPage}
+					>
+						&gt;
+					</Button>
+				</div>
+			)}
 		</Container>
 	);
 };
+
+
+	
