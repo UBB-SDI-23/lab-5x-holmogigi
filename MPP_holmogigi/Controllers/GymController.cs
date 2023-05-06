@@ -38,6 +38,16 @@ namespace MPP.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet("{page}/{pageSize}/special")]
+        public async Task<ActionResult<IEnumerable<Gym>>> GetAllSpecial(int page = 0, int pageSize = 10)
+        {
+            return await _dbContext.Gyms
+                .Include(x => x.Coaches)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Gym>> GetById(int id)
         {

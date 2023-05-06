@@ -58,7 +58,7 @@ export const AllGyms = () => {
 
 
 	function fetchBodybuilders(page: number): Promise<Gym[]> {
-		return fetch(`${BACKEND_API_URL}/api/Gym/${page}/${pageSize}`).then((response) => response.json());
+		return fetch(`${BACKEND_API_URL}/api/Gym/${page}/${pageSize}/special`).then((response) => response.json());
 	}
 
 	/*
@@ -145,7 +145,7 @@ export const AllGyms = () => {
 								<TableCell align="left">Location</TableCell>
 								<TableCell align="left">Membership</TableCell>
 								<TableCell align="left">Grade</TableCell>
-
+								<TableCell align="left">Nr.Coaches</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -158,7 +158,7 @@ export const AllGyms = () => {
 									<TableCell align="left">{course.location}</TableCell>
 									<TableCell align="left">{course.memembership}</TableCell>
 									<TableCell align="left">{course.grade}</TableCell>
-									
+									<TableCell align="left">{course.coaches?.length}</TableCell>
 									<IconButton
 										component={Link}
 										sx={{ mr: 3 }}
