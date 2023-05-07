@@ -22,11 +22,11 @@ export const CourseAdd = () => {
 	const navigate = useNavigate();
 
 	const [course, setCourse] = useState<Bodybuilder>({
-		Name: "",
-		Age: 1,
-		Weight: 1,
-		Height: 1,
-		Division: "",
+		name: "",
+		age: 1,
+		weight: 1,
+		height: 1,
+		division: "",
 	});
 
 	const addCourse = async (event: { preventDefault: () => void }) => {

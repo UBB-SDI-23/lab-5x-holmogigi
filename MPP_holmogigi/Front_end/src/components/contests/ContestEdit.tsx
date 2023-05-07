@@ -24,11 +24,11 @@ export const ContestEdit = () => {
     const { courseId } = useParams();
     const { courseId2 } = useParams();
     const [courses, setCourses] = useState<Contest>({
-        Datetime: "",
-        Name: "",
-        Location: "",
-        CoachId: 0,
-        BodybuilderId: 0
+        datetime: "",
+        name: "",
+        location: "",
+        coachid: 0,
+        bodybuilderid: 0
     });
 
     useEffect(() => {

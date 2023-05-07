@@ -22,10 +22,10 @@ export const CoachAdd = () => {
 	const navigate = useNavigate();
 
 	const [course, setCourse] = useState<Coach>({
-		Name: "",
-		Age: 1,
-		Rate: 1,
-		GymId: 1
+		name: "",
+		age: 1,
+		rate: 1,
+		gymId: 1
 	});
 
 	const addCourse = async (event: { preventDefault: () => void }) => {

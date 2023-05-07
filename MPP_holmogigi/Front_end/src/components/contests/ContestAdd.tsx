@@ -22,11 +22,11 @@ export const ContestAdd = () => {
 	const navigate = useNavigate();
 
 	const [course, setCourse] = useState<Contest>({
-		Datetime: "",
-		Name: "",
-		Location: "",	
-		CoachId: 0,
-		BodybuilderId: 0
+		datetime: "",
+		name: "",
+		location: "",	
+		coachid: 0,
+		bodybuilderid: 0
 	});
 
 	const addCourse = async (event: { preventDefault: () => void }) => {

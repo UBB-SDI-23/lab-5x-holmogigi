@@ -23,10 +23,10 @@ export const GymEdit = () => {
     const [loading, setLoading] = useState(false);
     const { courseId } = useParams();
     const [courses, setCourses] = useState<Gym>({
-        Name: "",
-        Location: "",
-        Memembership: 1,
-        Grade: 1,
+        name: "",
+        location: "",
+        memembership: 1,
+        grade: 1,
     });
 
     useEffect(() => {

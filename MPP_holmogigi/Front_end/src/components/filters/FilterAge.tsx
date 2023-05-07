@@ -128,7 +128,7 @@ export const FilterAge = () =>
 			<h1>Filter out bodybuilders that are younger than given age</h1>
 			<TextField
 				label="Age"
-				type="text"
+				
 				inputProps={{ min: 1, style: { textAlign: "center" } }}
 				value={Age}
 				onChange={handleAgeChange}

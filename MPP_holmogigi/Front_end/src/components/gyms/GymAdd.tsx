@@ -22,10 +22,10 @@ export const GymAdd = () => {
 	const navigate = useNavigate();
 
 	const [course, setCourse] = useState<Gym>({
-		Name: "",
-		Location: "",
-		Memembership: 1,
-		Grade: 1,
+		name: "",
+		location: "",
+		memembership: 1,
+		grade: 1,
 	});
 
 	const addCourse = async (event: { preventDefault: () => void }) => {
