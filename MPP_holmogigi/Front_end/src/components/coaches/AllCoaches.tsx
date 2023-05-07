@@ -29,7 +29,7 @@ export const AllCoaches = () => {
 
 	const pageSize = 5;
 	const [pageIndex, setPageIndex] = useState(0);
-	const [hasNextPage, setHasNextPage] = useState(true);
+	const [totalPages, setTotalPages] = useState(999999);
 
 	const [sorting, setSorting] = useState({
 		key: "name",
@@ -74,19 +74,27 @@ export const AllCoaches = () => {
 	*/
 
 	useEffect(() => {
+		// TODO: improve this func in all
+		const fetchPageCount = async () => {
+			const response = await fetch(
+				`${BACKEND_API_URL}/api/Coach/count/${pageSize}`
+			);
+			const count = await response.json();
+			setTotalPages(count);
+		};
+		fetchPageCount();
+	}, [pageSize]);
+
+
+	useEffect(() => {
 		setLoading(true);
 
 		// TODO: fix redundant request
 		fetchBodybuilders(pageIndex)
 			.then((data) => {
 				setCourses(data);
+				setLoading(false)
 			})
-			.then(() => {
-				fetchBodybuilders(pageIndex + 1).then((data) => {
-					setHasNextPage(data.length > 0);
-					setLoading(false);
-				});
-			});
 	}, [pageIndex, pageSize]);
 
 
@@ -115,6 +123,23 @@ export const AllCoaches = () => {
 		}
 	}
 
+	function handlePageClick(pageNumber: number) {
+		setPageIndex(pageNumber - 1);
+	}
+
+
+	const displayedPages = 9;
+
+	let startPage = pageIndex - Math.floor((displayedPages - 3) / 2) + 1;
+	let endPage = startPage + displayedPages - 3;
+
+	if (startPage <= 2) {
+		startPage = 1;
+		endPage = displayedPages - 1;
+	} else if (endPage >= totalPages - 1) {
+		startPage = totalPages - displayedPages + 2;
+		endPage = totalPages;
+	}
 
 	return (
 		<Container>
@@ -193,35 +218,77 @@ export const AllCoaches = () => {
 				>
 					<Button
 						variant="contained"
-						onClick={handlePrevPage}
+						onClick={() =>
+							setPageIndex((prevPageIndex) =>
+								Math.max(prevPageIndex - 1, 0)
+							)
+						}
 						disabled={pageIndex === 0}
 					>
 						&lt;
 					</Button>
-					<p
-						style={{
-							marginLeft: 16,
-							marginRight: 8,
-						}}
-					>
-					</p>
-					<TextField
-						value={pageIndex + 1}
-						type="text"
-						inputProps={{ min: 1, style: { textAlign: "center" } }}
-						onChange={handleInputChange}
-						onKeyPress={handleInputKeyPress}
-						variant="outlined"
-						size="small"
-						style={{
-							width: 100,
-							marginRight: 16,
-						}}
-					/>
+					{startPage > 1 && (
+						<>
+							<Button
+								variant={
+									pageIndex === 0 ? "contained" : "outlined"
+								}
+								onClick={() => handlePageClick(1)}
+								style={{
+									marginLeft: 8,
+									marginRight: 8,
+								}}
+							>
+								1
+							</Button>
+							<span>...</span>
+						</>
+					)}
+					{Array.from(
+						{ length: endPage - startPage + 1 },
+						(_, i) => i + startPage
+					).map((number) => (
+						<Button
+							key={number}
+							variant={
+								pageIndex === number - 1
+									? "contained"
+									: "outlined"
+							}
+							onClick={() => handlePageClick(number)}
+							style={{
+								marginLeft: 8,
+								marginRight: 8,
+							}}
+						>
+							{number}
+						</Button>
+					))}
+					{endPage < totalPages && (
+						<>
+							<span>...</span>
+							<Button
+								variant={
+									pageIndex === totalPages - 1
+										? "contained"
+										: "outlined"
+								}
+								onClick={() => handlePageClick(totalPages)}
+								style={{
+									marginLeft: 8,
+									marginRight: 8,
+								}}
+							>
+								{totalPages}
+							</Button>
+						</>
+					)}
 					<Button
 						variant="contained"
-						onClick={handleNextPage}
-						disabled={!hasNextPage}
+						onClick={() =>
+							setPageIndex((prevPageIndex) => prevPageIndex + 1)
+						}
+						disabled={pageIndex + 1 >= totalPages}
 					>
 						&gt;
 					</Button>

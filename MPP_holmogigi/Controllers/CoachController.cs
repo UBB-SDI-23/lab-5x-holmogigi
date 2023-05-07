@@ -126,6 +126,18 @@ namespace MPP.Controllers
             return NoContent();
         }
 
+        [HttpGet("count/{pageSize}")]
+        public async Task<int> GetTotalNumberOfPages(int pageSize = 10)
+        {
+            int total = await _dbContext.Coaches.CountAsync();
+            int totalPages = total / pageSize;
+            if (total % pageSize > 0)
+                totalPages++;
+
+            return totalPages;
+        }
+
+
 
         private bool CoachExisting(int id)
         {

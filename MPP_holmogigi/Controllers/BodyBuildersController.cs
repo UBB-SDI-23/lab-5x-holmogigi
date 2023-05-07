@@ -19,13 +19,7 @@ namespace MPP.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BodybuilderDTO>>> GetAll()
-        {
-
-            return await _dbContext.Bodybuilders.Select(b => BdtoDTO(b)).ToListAsync();
-        }
-
+        
         [HttpGet("{page}/{pageSize}")]
         public async Task<ActionResult<IEnumerable<BodybuilderDTO>>> GetAllPages(int page=0, int pageSize =10)
         {
