@@ -36,6 +36,7 @@ export const CourseAdd = () => {
 			navigate("/courses");
 		} catch (error) {
 			console.log(error);
+			alert("!ERROR! Ivalid age (1<age<122)!")
 		}
 	};
 

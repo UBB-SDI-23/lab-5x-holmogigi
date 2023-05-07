@@ -69,7 +69,7 @@ export const AppMenu = () => {
 						color="inherit"
 						sx={{ mr: 5 }}
 						startIcon={<LocalLibraryIcon />}>
-						Input Filter By Age
+						Input Filter by Age
 					</Button>
 
 					<Button
@@ -79,7 +79,7 @@ export const AppMenu = () => {
 						color="inherit"
 						sx={{ mr: 5 }}
 						startIcon={<LocalLibraryIcon />}>
-						Gym Coaches average age
+						Gym Coaches by avg Age
 					</Button>
 
 					<Button
@@ -89,7 +89,7 @@ export const AppMenu = () => {
 						color="inherit"
 						sx={{ mr: 5 }}
 						startIcon={<LocalLibraryIcon />}>
-						Gym couches youngest
+						Gym Coaches by Youngest
 					</Button>
 				</Toolbar>
 			</AppBar>

@@ -35,6 +35,7 @@ export const GymAdd = () => {
 			navigate("/gyms");
 		} catch (error) {
 			console.log(error);
+			alert("!ERROR! Invalid grade (0<grade<11)!");
 		}
 	};
 

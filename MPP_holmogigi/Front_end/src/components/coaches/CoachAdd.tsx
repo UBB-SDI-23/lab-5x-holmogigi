@@ -35,6 +35,7 @@ export const CoachAdd = () => {
 			navigate("/coaches");
 		} catch (error) {
 			console.log(error);
+			alert("!ERROR! Invalid coach rate (rate>1)!")
 		}
 	};
 

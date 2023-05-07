@@ -153,6 +153,9 @@ namespace MPP.Controllers
         [HttpPost("contest")]
         public async Task<ActionResult<ContestDTO>> PostContest (ContestDTO contest)
         {
+            if (contest.Name.Length < 2 || contest.Location.Length < 2)
+                return BadRequest("!ERROR! Invalid Name or Location!");
+
             var CoachId = contest.CoachId;
             var BodybuilderId = contest.BodybuilderId;
             var bd = await _dbContext.Bodybuilders.FindAsync (BodybuilderId);

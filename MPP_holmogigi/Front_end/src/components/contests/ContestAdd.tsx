@@ -36,6 +36,7 @@ export const ContestAdd = () => {
 			navigate("/contests");
 		} catch (error) {
 			console.log(error);
+			alert("!ERROR! Invalid name or location (name.lenght > 2 && location.name > 2)!");
 		}
 	};
 
