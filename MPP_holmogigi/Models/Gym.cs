@@ -9,5 +9,8 @@
         public int Grade { get; set; }
 
         public virtual ICollection<Coach> Coaches { get; set; } = null!;
+
+        public virtual int? UserId { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }

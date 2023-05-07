@@ -30,7 +30,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BodybuilderDTO>> GetById(int id)
+        public async Task<ActionResult<Bodybuilder>> GetById(int id)
         {
             if (_dbContext.Bodybuilders == null)
             {
@@ -43,7 +43,7 @@ namespace MPP.Controllers
                 return NotFound();
             }
 
-            return BdtoDTO(body);
+            return body;
         }
 
         [HttpPost]

@@ -2,6 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>https</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\Properties\PublishProfiles\MPP20230409123420 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\Properties\PublishProfiles\MPP20230507181452 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

@@ -13,5 +13,8 @@ namespace MPP.Models
         public virtual Gym Gym { set; get; } = null!;
 
         public virtual ICollection<Contest> Contests { set; get; } = null!;
+
+        public virtual int? UserId { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }

@@ -10,6 +10,9 @@
         public string? Division { get; set; }
 
         public virtual ICollection<Contest> Contests { get; set; } = null!;
+
+        public virtual int? UserId { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }
       

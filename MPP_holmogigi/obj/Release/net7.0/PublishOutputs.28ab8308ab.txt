@@ -11,9 +11,11 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Ou
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\AutoMapper.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Azure.Core.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Azure.Identity.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Bogus.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Castle.Core.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\EntityFramework.SqlServer.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\EntityFramework.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Faker.Net.6.0.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Google.Protobuf.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\Humanizer.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\K4os.Compression.LZ4.dll
@@ -117,6 +119,7 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Ou
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\System.Security.Permissions.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\System.Windows.Extensions.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\de-DE\Faker.Net.6.0.resources.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\cs\Microsoft.CodeAnalysis.resources.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\de\Microsoft.CodeAnalysis.resources.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\obj\Release\net7.0\PubTmp\Out\es\Microsoft.CodeAnalysis.resources.dll

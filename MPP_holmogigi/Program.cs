@@ -47,6 +47,8 @@ app.Run();
 */
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
@@ -62,7 +64,7 @@ builder.Services.ConfigureSwaggerGen(setup =>
     });
 });
 
-builder.Services.AddDbContext<BodyBuildersDatabasesContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<BodyBuildersDatabasesContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionTESTER")));
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
@@ -84,3 +86,4 @@ app.UseCors("corsapp");
 
 app.MapControllers();
 app.Run();
+

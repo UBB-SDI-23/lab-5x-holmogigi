@@ -51,6 +51,7 @@ export const GymDetails = () => {
 							</ul>
 						)}
 					</ul>
+					<p>UserId: {course?.userId}</p>
 				</CardContent>
 				<CardActions>
 					<IconButton component={Link} sx={{ mr: 3 }} to={`/gyms/${courseId}/edit`}>

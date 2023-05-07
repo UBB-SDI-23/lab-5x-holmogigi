@@ -11,6 +11,6 @@ export interface Contest
 
     coach?: Coach;
     bodybuilder?: Bodybuilder;
-
+    userid: number;
     [key: string]: any;
 }

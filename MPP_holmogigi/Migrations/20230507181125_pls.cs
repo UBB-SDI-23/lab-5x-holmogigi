@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MPP.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class pls : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccessLevel = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bodybuilders",
                 columns: table => new
@@ -21,11 +36,17 @@ namespace MPP.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
-                    Division = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Division = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bodybuilders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bodybuilders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -37,11 +58,38 @@ namespace MPP.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Memembership = table.Column<int>(type: "int", nullable: false),
-                    Grade = table.Column<int>(type: "int", nullable: false)
+                    Grade = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gyms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Gyms_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserProfiles",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    MaritalStatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfiles", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_UserProfiles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -53,7 +101,8 @@ namespace MPP.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
-                    GymId = table.Column<int>(type: "int", nullable: false)
+                    GymId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,6 +113,11 @@ namespace MPP.Migrations
                         principalTable: "Gyms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Coaches_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,7 +128,8 @@ namespace MPP.Migrations
                     BodybuilderId = table.Column<int>(type: "int", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +146,17 @@ namespace MPP.Migrations
                         principalTable: "Coaches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contests_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bodybuilders_UserId",
+                table: "Bodybuilders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coaches_GymId",
@@ -99,9 +164,31 @@ namespace MPP.Migrations
                 column: "GymId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Coaches_UserId",
+                table: "Coaches",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contests_CoachId",
                 table: "Contests",
                 column: "CoachId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contests_UserId",
+                table: "Contests",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gyms_UserId",
+                table: "Gyms",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Name",
+                table: "Users",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -111,6 +198,9 @@ namespace MPP.Migrations
                 name: "Contests");
 
             migrationBuilder.DropTable(
+                name: "UserProfiles");
+
+            migrationBuilder.DropTable(
                 name: "Bodybuilders");
 
             migrationBuilder.DropTable(
@@ -118,6 +208,9 @@ namespace MPP.Migrations
 
             migrationBuilder.DropTable(
                 name: "Gyms");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

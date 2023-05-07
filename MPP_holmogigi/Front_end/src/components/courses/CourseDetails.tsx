@@ -34,6 +34,7 @@ export const CourseDetails = () => {
 					<p>Bd weight: {course?.weight}</p>
 					<p>Bd height: {course?.height}</p>
 					<p>Bd division: {course?.division}</p>
+					<p>UserId: {course?.userId}</p>
 				</CardContent>
 				<CardActions>
 					<IconButton component={Link} sx={{ mr: 3 }} to={`/courses/${courseId}/edit`}>

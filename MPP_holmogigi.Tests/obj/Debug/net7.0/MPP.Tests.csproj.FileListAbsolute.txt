@@ -1533,3 +1533,6 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\obj\Debug\net7.0\refin
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\obj\Debug\net7.0\MPP.Tests.pdb
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\obj\Debug\net7.0\MPP.Tests.genruntimeconfig.cache
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\obj\Debug\net7.0\ref\MPP.Tests.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\Bogus.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\Faker.Net.6.0.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\de-DE\Faker.Net.6.0.resources.dll

@@ -9,6 +9,6 @@ export interface Gym
     grade: number;
 
     coaches?: Coach[]; 
-
+    userid: number;
     [key: string]: any;
 }

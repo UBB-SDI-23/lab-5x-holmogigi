@@ -49,7 +49,9 @@ export const ContestDetails = () => {
 						<li>Weight: {course?.bodybuilder?.weight}</li>
 						<li>Height: {course?.bodybuilder?.height}</li>
 						<li>Division: {course?.bodybuilder?.division}</li>
+						<li>Division: {course?.bodybuilder?.userid}</li>
 					</ul>
+					<p>UserId: {course?.userId}</p>
 				</CardContent>
 				<CardActions>
 					<IconButton component={Link} sx={{ mr: 3 }} to={`/contests/${courseId}/${courseId2}/edit`}>

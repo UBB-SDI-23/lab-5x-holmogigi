@@ -15,5 +15,8 @@
         public  Coach? Coach { get; set; } = null!;
 
         public  Bodybuilder? Bodybuilder { get; set; } = null!;
+
+        public virtual int? UserId { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }

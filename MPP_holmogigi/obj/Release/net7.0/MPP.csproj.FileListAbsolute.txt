@@ -921,3 +921,6 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\package.json
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\tsconfig.json
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Front_end\tsconfig.node.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Bogus.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\Faker.Net.6.0.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Release\net7.0\de-DE\Faker.Net.6.0.resources.dll
