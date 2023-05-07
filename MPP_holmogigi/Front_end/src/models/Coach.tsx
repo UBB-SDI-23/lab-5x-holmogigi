@@ -12,6 +12,6 @@ export interface Coach
     gym?: Gym;
 
     contest?: Contest[];
-    userid: number;
+    userid?: number;
     [key: string]: any;
 }

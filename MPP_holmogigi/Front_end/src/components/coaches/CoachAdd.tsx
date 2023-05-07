@@ -25,7 +25,7 @@ export const CoachAdd = () => {
 		name: "",
 		age: 1,
 		rate: 1,
-		gymId: 1
+		gymId: 1,
 	});
 
 	const addCourse = async (event: { preventDefault: () => void }) => {

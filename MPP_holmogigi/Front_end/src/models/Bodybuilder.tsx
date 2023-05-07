@@ -5,6 +5,6 @@
     weight: number;
     height: number;
     division: string;
-    userid: number;
+    userid?: number;
     [key: string]: any;
 }
