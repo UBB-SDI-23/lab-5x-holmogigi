@@ -43,6 +43,7 @@ namespace MPP.Controllers
         {
             return await _dbContext.Gyms
                 .Include(x => x.Coaches)
+                .Include(x => x.User)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -76,7 +77,8 @@ namespace MPP.Controllers
                 Name = gymDTO.Name,
                 Location = gymDTO.Location,
                 Memembership = gymDTO.Memembership,
-                Grade = gymDTO.Grade
+                Grade = gymDTO.Grade,
+                UserId = 1
             };
 
             _dbContext.Gyms.Add(gym);

@@ -219,14 +219,14 @@ namespace MPP.Migrations
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaritalStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PagePreference")
                         .HasColumnType("int");

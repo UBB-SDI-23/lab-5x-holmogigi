@@ -110,7 +110,7 @@ export const AllContests = () => {
 								<TableCell align="left">Date and Time</TableCell>
 								<TableCell align="left">Name</TableCell>
 								<TableCell align="left">Location</TableCell>
-								
+								<TableCell align="left">Added by</TableCell>
 
 							</TableRow>
 						</TableHead>
@@ -123,7 +123,14 @@ export const AllContests = () => {
 									<TableCell align="left">{formatDate(course.dateTime)}</TableCell>
 									<TableCell align="left">{course.name}</TableCell>
 									<TableCell align="left">{course.location}</TableCell>
-									
+									<TableCell align="left">
+										<Link
+											to={`/users/${course.user?.id}/details`}
+											title="View user details"
+										>
+											{course.user?.name}
+										</Link>
+									</TableCell>
 
 									<IconButton
 										component={Link}

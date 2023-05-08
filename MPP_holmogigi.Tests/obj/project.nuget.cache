@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6zr3Lg2QWfKc2YkeHPtMKwGuliVOGcDOTFslDaC2GKRyLbqZKKfbm7zBJiqQGC5lGnaBUmzJKAQcgIVQyeWebA==",
+  "dgSpecHash": "n7yL6bh5M452NgbqV0w98XfVXZvEO52ZVOTYqSq6pff4iGu2zIC4DusNl8m4RJRMaKWEr9A72XpOgPsKiKYyPA==",
   "success": true,
   "projectFilePath": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi.Tests\\MPP.Tests.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnet.webpages\\3.2.7\\microsoft.aspnet.webpages.3.2.7.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnet.webpages.data\\3.2.7\\microsoft.aspnet.webpages.data.3.2.7.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnet.webpages.webdata\\3.2.7\\microsoft.aspnet.webpages.webdata.3.2.7.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.5\\microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.4\\microsoft.aspnetcore.jsonpatch.7.0.4.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\7.0.4\\microsoft.aspnetcore.mvc.newtonsoftjson.7.0.4.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.3\\microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",

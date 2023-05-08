@@ -169,7 +169,7 @@ export const AllCoaches = () => {
 								</TableCell>
 								<TableCell align="left">Age</TableCell>
 								<TableCell align="left">Rate</TableCell>
-								
+								<TableCell align="left">Added by</TableCell>
 
 							</TableRow>
 						</TableHead>
@@ -182,8 +182,14 @@ export const AllCoaches = () => {
 									<TableCell align="left">{course.name}</TableCell>
 									<TableCell align="left">{course.age}</TableCell>
 									<TableCell align="left">{course.rate}</TableCell>
-									
-
+									<TableCell align="left">
+										<Link
+											to={`/users/${course.user?.id}/details`}
+											title="View user details"
+										>
+											{course.user?.name}
+										</Link>
+									</TableCell>
 									<IconButton
 										component={Link}
 										sx={{ mr: 3 }}

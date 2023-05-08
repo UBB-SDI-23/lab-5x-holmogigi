@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MPP.Migrations
 {
     /// <inheritdoc />
-    public partial class pls : Migration
+    public partial class newpls : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,27 @@ namespace MPP.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConfirmationCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Used = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfirmationCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConfirmationCodes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Gyms",
                 columns: table => new
                 {
@@ -79,8 +100,9 @@ namespace MPP.Migrations
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    MaritalStatus = table.Column<int>(type: "int", nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaritalStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PagePreference = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,6 +191,18 @@ namespace MPP.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConfirmationCodes_Code",
+                table: "ConfirmationCodes",
+                column: "Code",
+                unique: true,
+                filter: "[Code] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfirmationCodes_UserId",
+                table: "ConfirmationCodes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contests_CoachId",
                 table: "Contests",
                 column: "CoachId");
@@ -194,6 +228,9 @@ namespace MPP.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ConfirmationCodes");
+
             migrationBuilder.DropTable(
                 name: "Contests");
 

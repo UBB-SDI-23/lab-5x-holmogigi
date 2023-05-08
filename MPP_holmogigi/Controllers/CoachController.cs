@@ -19,9 +19,10 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}")]
-        public async Task<ActionResult<IEnumerable<CoachDTO>>> GetAllPages(int page = 0, int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<Coach>>> GetAllPages(int page = 0, int pageSize = 10)
         {
-            return await _dbContext.Coaches.Select(x => CoachToDTO(x))
+            return await _dbContext.Coaches
+                .Include(x => x.User)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -65,8 +66,9 @@ namespace MPP.Controllers
                 Name = coachDTO.Name,
                 Age = coachDTO.Age,
                 Rate = coachDTO.Rate,
-                GymId = coachDTO.GymId
-        };
+                GymId = coachDTO.GymId,
+                UserId = 1
+            };
             _dbContext.Coaches.Add(coach);
             await _dbContext.SaveChangesAsync();
 

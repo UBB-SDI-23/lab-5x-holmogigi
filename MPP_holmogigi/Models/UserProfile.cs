@@ -1,14 +1,13 @@
-﻿using static Bogus.DataSets.Name;
+﻿using Microsoft.AspNetCore.Components.Web.Virtualization;
+using static Bogus.DataSets.Name;
 
 namespace MPP.Models
 {
    
-
-
     public class UserProfile
     {
         public virtual int? UserId { get; set; }
-        public virtual User User { get; set; } = null!;
+        public  virtual User User { get; set; } = null!;
 
         public virtual string? Bio { get; set; }
         public virtual string? Location { get; set; }

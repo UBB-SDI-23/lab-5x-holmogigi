@@ -41,7 +41,6 @@ export const CoachDetails = () =>
 						<li>Membership: {course?.gym?.memembership}</li>
 						<li>Grade: {course?.gym?.grade}</li>
 					</ul>
-					<p>UserId: {course?.userId}</p>
 				</CardContent>
 				<CardActions>
 					<IconButton component={Link} sx={{ mr: 3 }} to={`/coaches/${courseId}/edit`}>

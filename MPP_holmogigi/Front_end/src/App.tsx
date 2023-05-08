@@ -3,9 +3,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import * as React from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Button, Snackbar,} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MuiAlert, { AlertProps, AlertColor } from "@mui/material/Alert";
 import { AppHome } from "./components/AppHome";
 import { AppMenu } from "./components/AppMenu";
 import { AllCourses } from "./components/courses/AllCourses";
@@ -32,14 +33,78 @@ import { FilterAge } from "./components/filters/FilterAge";
 import { GymMinAge } from "./components/filters/GymMinAge";
 import { GymOrderSmall } from "./components/filters/GymOrderSmall";
 
-function App() {
+import { UserDetails } from "./components/users/UserDetails";
+import { UserRegister } from "./components/users/UserRegister";
+import { UserRegisterConfirm } from "./components/users/UserRegisterConfirm";
+import { UserLogin } from "./components/users/UserLogin";
+import { SnackbarContext } from "./components/SnackbarContext";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+	props,
+	ref
+) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+function App()
+{
+	const [open, setOpen] = useState(false);
+	const [severity, setSeverity] = useState<AlertColor>("success");
+	const [message, setMessage] = useState("placeholder");
+
+	const openSnackbar = (severity: AlertColor, message: string) => {
+		handleClose();
+
+		setTimeout(() => {
+			setSeverity(severity);
+			setMessage(message);
+			setOpen(true);
+		}, 250);
+	};
+
+	const handleClose = (
+		event?: React.SyntheticEvent | Event,
+		reason?: string
+	) => {
+		if (reason === "clickaway") {
+			return;
+		}
+
+		setOpen(false);
+	};
 	return (
 		<React.Fragment>
+			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert
+					onClose={handleClose}
+					severity={severity}
+					sx={{ width: "100%", whiteSpace: "pre-wrap" }}
+				>
+					{message}
+				</Alert>
+			</Snackbar>
+
+			<SnackbarContext.Provider value={openSnackbar}>
 			<Router>
 				<AppMenu />
 
 				<Routes>
 					<Route path="/" element={<AppHome />} />
+
+						<Route
+							path="/users/:userId/details"
+							element={<UserDetails />}
+						/>
+						<Route
+							path="/users/register"
+							element={<UserRegister />}
+						/>
+						<Route
+							path="/users/register/confirm/:code"
+							element={<UserRegisterConfirm />}
+						/>
+						<Route path="/users/login" element={<UserLogin />} />	
+					
 
 					<Route path="/courses" element={<AllCourses />} />
 					<Route path="/courses/:courseId/details" element={<CourseDetails />} />
@@ -71,7 +136,8 @@ function App() {
 
 					<Route path="/gymOrderSmall" element={<GymOrderSmall />} />
 				</Routes>
-			</Router>
+				</Router>
+			</SnackbarContext.Provider>
 		</React.Fragment>
 	);
 }

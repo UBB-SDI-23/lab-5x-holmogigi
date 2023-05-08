@@ -21,9 +21,10 @@ namespace MPP.Controllers
 
         
         [HttpGet("{page}/{pageSize}")]
-        public async Task<ActionResult<IEnumerable<BodybuilderDTO>>> GetAllPages(int page=0, int pageSize =10)
+        public async Task<ActionResult<IEnumerable<Bodybuilder>>> GetAllPages(int page=0, int pageSize =10)
         {
-            return await _dbContext.Bodybuilders.Select(b => BdtoDTO(b))
+            return await _dbContext.Bodybuilders
+                .Include(x => x.User)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -59,7 +60,8 @@ namespace MPP.Controllers
                 Age = bodybuilder.Age,
                 Weight = bodybuilder.Weight,
                 Height = bodybuilder.Height,
-                Division = bodybuilder.Division
+                Division = bodybuilder.Division,
+                UserId = 1
             };
 
             _dbContext.Bodybuilders.Add(Body);
@@ -165,6 +167,7 @@ namespace MPP.Controllers
                 DateTime = DateTime.Now,
                 Name = contest.Name,
                 Location = contest.Location,
+                UserId = 1
             };
 
             _dbContext.Contests.Add (contestt);
@@ -175,9 +178,10 @@ namespace MPP.Controllers
 
 
         [HttpGet("{page}/{pageSize}/contest")]
-        public async Task<ActionResult<IEnumerable<ContestDTO>>> GetAllPagesContest(int page = 0, int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<Contest>>> GetAllPagesContest(int page = 0, int pageSize = 10)
         {
-            return await _dbContext.Contests.Select(c => ContesttoDTO(c))
+            return await _dbContext.Contests
+                .Include(X => X.User)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

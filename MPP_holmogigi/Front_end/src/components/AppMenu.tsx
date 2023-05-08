@@ -2,6 +2,7 @@ import { Box, AppBar, Toolbar, IconButton, Typography, Button } from "@mui/mater
 import { Link, useLocation } from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import { getAccount } from "../auth";
 
 export const AppMenu = () => {
 	const location = useLocation();
@@ -30,6 +31,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Bodybuilders
 					</Button>
@@ -39,6 +41,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Coaches
 					</Button>
@@ -48,6 +51,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Gyms
 					</Button>
@@ -57,6 +61,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Contests
 					</Button>
@@ -68,6 +73,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Input Filter by Age
 					</Button>
@@ -78,6 +84,7 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Gym Coaches by avg Age
 					</Button>
@@ -88,9 +95,42 @@ export const AppMenu = () => {
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
 						startIcon={<LocalLibraryIcon />}>
 						Gym Coaches by Youngest
 					</Button>
+
+					<Box sx={{ flexGrow: 1 }} />
+
+					<Button
+						variant="text"
+						to={'/users/${getAccount()?.id}/details'}
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						//disabled={getAccount() === null}
+						startIcon={<LocalLibraryIcon />}>
+						{getAccount()?.name}
+					</Button>
+					<Button
+						variant="text"
+						to="/users/login"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						LOGIN
+					</Button>
+					<Button
+						variant="text"
+						to="/users/register"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						REGISTER
+					</Button>
+					
 				</Toolbar>
 			</AppBar>
 		</Box>

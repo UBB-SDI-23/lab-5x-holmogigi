@@ -146,6 +146,7 @@ export const AllCourses = () => {
 								<TableCell align="left">Weight</TableCell>
 								<TableCell align="left">Height</TableCell>
 								<TableCell align="left">Division</TableCell>
+								<TableCell align="left">Added by</TableCell>
 	
 							</TableRow>
 						</TableHead>
@@ -160,7 +161,14 @@ export const AllCourses = () => {
 									<TableCell align="left">{course.weight}</TableCell>
 									<TableCell align="left">{course.height}</TableCell>
 									<TableCell align="left">{course.division}</TableCell>
-									
+									<TableCell align="left">
+										<Link
+											to={`/users/${course.user?.id}/details`}
+											title="View user details"
+										>
+											{course.user?.name}
+										</Link>
+									</TableCell>
 										<IconButton
 											component={Link}
 											sx={{ mr: 3 }}

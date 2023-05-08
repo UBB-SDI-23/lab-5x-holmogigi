@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MPP.Migrations
 {
     [DbContext(typeof(BodyBuildersDatabasesContext))]
-    [Migration("20230507181125_pls")]
-    partial class pls
+    [Migration("20230508082547_newpls")]
+    partial class newpls
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,38 @@ namespace MPP.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Coaches");
+                });
+
+            modelBuilder.Entity("MPP.Models.ConfirmationCode", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Used")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ConfirmationCodes");
                 });
 
             modelBuilder.Entity("MPP.Models.Contest", b =>
@@ -190,13 +222,16 @@ namespace MPP.Migrations
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaritalStatus")
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PagePreference")
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
@@ -228,6 +263,16 @@ namespace MPP.Migrations
                         .IsRequired();
 
                     b.Navigation("Gym");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MPP.Models.ConfirmationCode", b =>
+                {
+                    b.HasOne("MPP.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

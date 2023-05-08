@@ -1,5 +1,6 @@
 ﻿import { Contest } from "./Contest";
 import { Gym } from "./Gym"
+import { User } from "./User";
 
 export interface Coach
 {
@@ -13,5 +14,6 @@ export interface Coach
 
     contest?: Contest[];
     userid?: number;
+    user?: User
     [key: string]: any;
 }

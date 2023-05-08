@@ -16,12 +16,12 @@ public partial class BodyBuildersDatabasesContext : DbContext
  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<ConfirmationCode>()
                 .HasIndex(u => u.Code)
                 .IsUnique();
 
-        base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<UserProfile>()
                 .HasKey(u => u.UserId);
