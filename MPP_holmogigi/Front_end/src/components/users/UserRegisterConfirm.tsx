@@ -13,6 +13,7 @@ import axios, { AxiosError } from "axios";
 import { BACKEND_API_URL } from "../../constants";
 import { useContext } from "react";
 import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const UserRegisterConfirm = () => {
     const navigate = useNavigate();
@@ -24,7 +25,12 @@ export const UserRegisterConfirm = () => {
         event.preventDefault();
         try {
             await axios
-                .post(`${BACKEND_API_URL}/api/Users/register/confirm/${code}`)
+                .post(`${BACKEND_API_URL}/api/Users/register/confirm/${code}`
+                , {
+                headers: {
+                    Authorization: `Bearer ${getAuthToken()}`,
+                },
+            })
                 .then(() => {
                     openSnackbar("success", "Account confirmed successfully!");
                     navigate("/users/login");
