@@ -22,19 +22,15 @@ public partial class BodyBuildersDatabasesContext : DbContext
                 .HasIndex(u => u.Code)
                 .IsUnique();
 
-
-        modelBuilder.Entity<UserProfile>()
-                .HasKey(u => u.UserId);
-
         modelBuilder.Entity<User>()
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
-        modelBuilder.Entity<User>()
-               .HasOne(u => u.UserProfile)
-               .WithOne(p => p.User)
-               .HasForeignKey<UserProfile>(p => p.UserId)
-               .OnDelete(DeleteBehavior.ClientSetNull);
+        modelBuilder.Entity<UserProfile>()
+                .HasOne(p => p.User)
+                .WithOne(u => u.UserProfile)
+                .HasForeignKey<UserProfile>(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         // configure 1 to many relationship
         modelBuilder.Entity<Coach>()

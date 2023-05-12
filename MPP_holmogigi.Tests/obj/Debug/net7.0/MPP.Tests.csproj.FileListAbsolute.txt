@@ -1536,3 +1536,4 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\obj\Debug\net7.0\ref\M
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\Bogus.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\Faker.Net.6.0.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\de-DE\Faker.Net.6.0.resources.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi.Tests\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

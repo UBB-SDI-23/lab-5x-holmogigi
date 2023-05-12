@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MPP.Migrations
 {
     [DbContext(typeof(BodyBuildersDatabasesContext))]
-    [Migration("20230508082547_newpls")]
-    partial class newpls
+    [Migration("20230512141507_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,8 +213,11 @@ namespace MPP.Migrations
 
             modelBuilder.Entity("MPP.Models.UserProfile", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
@@ -234,7 +237,14 @@ namespace MPP.Migrations
                     b.Property<int>("PagePreference")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.Property<int?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -318,6 +328,7 @@ namespace MPP.Migrations
                     b.HasOne("MPP.Models.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("MPP.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MPP.Migrations
 {
     /// <inheritdoc />
-    public partial class newpls : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -96,6 +96,8 @@ namespace MPP.Migrations
                 name: "UserProfiles",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -106,12 +108,13 @@ namespace MPP.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProfiles", x => x.UserId);
+                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserProfiles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,6 +219,12 @@ namespace MPP.Migrations
                 name: "IX_Gyms_UserId",
                 table: "Gyms",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfiles_UserId",
+                table: "UserProfiles",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Name",

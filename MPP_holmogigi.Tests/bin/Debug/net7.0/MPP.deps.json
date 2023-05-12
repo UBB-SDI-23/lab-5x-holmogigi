@@ -11,6 +11,7 @@
           "AutoMapper": "12.0.1",
           "Bogus": "34.0.2",
           "Faker.Net": "2.0.154",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.5",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "7.0.4",
           "Microsoft.AspNetCore.OpenApi": "7.0.3",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.4",
@@ -230,6 +231,17 @@
           "lib/net45/WebMatrix.WebData.dll": {
             "assemblyVersion": "3.0.0.0",
             "fileVersion": "3.0.61128.0"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.5": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.21.0"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "7.0.5.0",
+            "fileVersion": "7.0.523.17410"
           }
         }
       },
@@ -2610,6 +2622,13 @@
       "sha512": "sha512-AxvuTZdF1Z216x0ErUw/84QNsf42PuSFr0V3tUAzm8v0tVdg2SYTgRRxF9TgTRfkG3RA1Om5dmlyS3x3/MYotQ==",
       "path": "microsoft.aspnet.webpages.webdata/3.2.7",
       "hashPath": "microsoft.aspnet.webpages.webdata.3.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dS6LPC7ZwJUcxcnB7KBh5L7iO9dbzEuVrNv2YrtiUCclcvBCfCJ/UKlvgHedjd4VcB6bzHcj3sEmFZlfH6qH0Q==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/7.0.5",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512"
     },
     "Microsoft.AspNetCore.JsonPatch/7.0.4": {
       "type": "package",
