@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace MPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Gyms")]
     [ApiController]
     public class GymController : ControllerBase
     {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MPP.Database;
@@ -8,8 +9,9 @@ using System.Runtime.CompilerServices;
 
 namespace MPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Bodybuilders")]
     [ApiController]
+
     public class BodyBuildersController : ControllerBase
     {
         private readonly BodyBuildersDatabasesContext _dbContext;
@@ -21,6 +23,7 @@ namespace MPP.Controllers
 
         
         [HttpGet("{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Bodybuilder>>> GetAllPages(int page=0, int pageSize =10)
         {
             return await _dbContext.Bodybuilders
@@ -31,6 +34,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Bodybuilder>> GetById(int id)
         {
             if (_dbContext.Bodybuilders == null)
@@ -130,6 +134,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("filter/{Age}/{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BodybuilderDTO>>> FilterAge(int Age, int page = 0, int pageSize = 10)
         {
             if (_dbContext.Bodybuilders == null)
@@ -178,6 +183,7 @@ namespace MPP.Controllers
 
 
         [HttpGet("{page}/{pageSize}/contest")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Contest>>> GetAllPagesContest(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Contests
@@ -188,6 +194,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id},{id2}/contest")]
+        [AllowAnonymous]
         public async Task<ActionResult<Contest>> GetByIdContest(int id, int id2)
         {
             if (_dbContext.Contests == null)

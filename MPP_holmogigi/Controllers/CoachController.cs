@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Coaches")]
     [ApiController]
     public class CoachController : ControllerBase
     {

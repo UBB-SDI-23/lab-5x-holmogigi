@@ -20,7 +20,7 @@ using System.Data.SqlClient;
 
 namespace MPP.Controllers
 {
-    [Route("api/[users]")]
+    [Route("api/Users")]
     [ApiController]
     public class UsersController : ControllerBase
     {

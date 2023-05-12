@@ -1,8 +1,14 @@
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MPP.Database;
 using MPP.Models;
 using MySQL.Data.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text;
 
 /*
 var builder = WebApplication.CreateBuilder(args);
@@ -48,7 +54,7 @@ app.Run();
 
 
 
-
+/*
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
@@ -86,4 +92,98 @@ app.UseCors("corsapp");
 
 app.MapControllers();
 app.Run();
+*/
 
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("https://development--boisterous-gecko-5cf74e.netlify.app")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+builder.Services.AddHostedService<MPP.ExpiredConfirmationCodeCleanupService>();
+
+builder.Services.AddControllers(
+    options =>
+    {
+        var policy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+        options.Filters.Add(new AuthorizeFilter(policy));
+    }
+    )
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+;
+
+var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
+builder.Services.Configure<JwtSetter>(jwtSettingsSection);
+var jwtSettings = jwtSettingsSection.Get<JwtSetter>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings!.Secret)),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddDbContext<BodyBuildersDatabasesContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionTESTER"), options => options.CommandTimeout(60)));
+
+//.UseLazyLoadingProxies()
+
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureSwaggerGen(setup =>
+{
+    setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Bodybuilder API",
+        Version = "v1"
+    });
+});
+
+var app = builder.Build();
+
+/*
+// Seed database
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetService<BodyBuildersDatabasesContext>();
+}
+*/
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+
+app.UseCors();
+app.UseAuthorization();
+
+app.MapControllers();
+app.Run();
