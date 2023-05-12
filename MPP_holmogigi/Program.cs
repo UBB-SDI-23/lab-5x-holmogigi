@@ -101,7 +101,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://development--boisterous-gecko-5cf74e.netlify.app")
+            policy.WithOrigins("https://bodybuildersmanagement.netlify.app")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -164,13 +164,6 @@ builder.Services.ConfigureSwaggerGen(setup =>
 
 var app = builder.Build();
 
-/*
-// Seed database
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetService<BodyBuildersDatabasesContext>();
-}
-*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

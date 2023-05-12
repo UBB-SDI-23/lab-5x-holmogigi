@@ -15,13 +15,14 @@
 import { Container } from "@mui/system";
 import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BACKEND_API_URL} from "../../constants";
+import { BACKEND_API_URL, formatDate} from "../../constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
 import { UserRegisterDTO } from "../../models/UserRegisterDTO";
 import { debounce } from "lodash";
 import { useContext } from "react";
 import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const UserRegister = () => {
     const navigate = useNavigate();
@@ -39,24 +40,42 @@ export const UserRegister = () => {
         maritalStatus: "",
     });
 
+
     const addRole = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
         try {
             await axios
-                .post(`${BACKEND_API_URL}/api/Users/register`, user)
+                .post(`${BACKEND_API_URL}/api/Users/register`, user, {
+                    headers: {
+                        Authorization: `Bearer ${getAuthToken()}`,
+                    },
+                })
                 .then((response) => {
                     console.log(response);
+                    const token = response.data.token;
+
+                    const expirationDateTime = new Date(
+                        response.data.expiration
+                    );
+                    const expirationInMinutes = Math.floor(
+                        (expirationDateTime.getTime() -
+                            new Date().getTime() +
+                            1000 * 59) /
+                        (1000 * 60)
+                    );
 
                     openSnackbar(
                         "success",
                         "Registered successfully!" +
                         "\n" +
                         "Please confirm your account using this code: " +
-                        response.data.token +
+                        token +
                         "\n" +
-                        "This code will expire in 10 minutes."
+                        `This code will expire in ${expirationInMinutes} minutes at ${formatDate(
+                            expirationDateTime
+                        )}.`
                     );
-                    navigate(`/users/register/confirm/${response.data.token}`);
+                    navigate(`/users/register/confirm/${token}`);
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
@@ -101,7 +120,7 @@ export const UserRegister = () => {
                             Register
                         </h1>
                     </Box>
-                    <form id="registerForm" onSubmit={addRole}>
+                    <form>
                         <TextField
                             id="name"
                             label="Name"
@@ -205,11 +224,7 @@ export const UserRegister = () => {
                     </form>
                 </CardContent>
                 <CardActions sx={{ mb: 1, ml: 1, mt: 1 }}>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        form="registerForm"
-                    >
+                    <Button onClick={UserRegister} variant="contained">
                         Register
                     </Button>
                 </CardActions>

@@ -122,12 +122,13 @@ namespace MPP.Controllers
                     Location = userRegisterDTO.Location,
                     Birthday = userRegisterDTO.Birthday,
                     Gender = userRegisterDTO.Gender,
-                    MaritalStatus = userRegisterDTO.MaritalStatus
+                    MaritalStatus = userRegisterDTO.MaritalStatus,
+                    PagePreference = 5
                 }
             };
 
             _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
 
             var userDTO = UserToDTO(user);
             userDTO.Password = null;

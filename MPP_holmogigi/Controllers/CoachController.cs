@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MPP.Database;
 using MPP.DTOs;
@@ -7,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MPP.Controllers
 {
-    [Route("api/Coaches")]
+    [Route("api/Coach")]
     [ApiController]
     public class CoachController : ControllerBase
     {
@@ -19,6 +20,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Coach>>> GetAllPages(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Coaches
@@ -29,6 +31,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CoachDTO>>> GetAll()
         {    
             return await _dbContext.Coaches
@@ -37,6 +40,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Coach>> GetById(int id)
         {
             if (_dbContext.Coaches == null)
@@ -129,6 +133,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("count/{pageSize}")]
+        [AllowAnonymous]
         public async Task<int> GetTotalNumberOfPages(int pageSize = 10)
         {
             int total = await _dbContext.Coaches.CountAsync();

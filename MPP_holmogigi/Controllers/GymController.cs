@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using MPP.Database;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 
 namespace MPP.Controllers
 {
-    [Route("api/Gyms")]
+    [Route("api/Gym")]
     [ApiController]
     public class GymController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> GetAll()
         {
             return await _dbContext.Gyms
@@ -29,6 +31,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> GetAllPages(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Gyms
@@ -39,6 +42,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}/special")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetAllSpecial(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Gyms
@@ -50,6 +54,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Gym>> GetById(int id)
         {
             if (_dbContext.Gyms == null)
@@ -154,6 +159,7 @@ namespace MPP.Controllers
 
 
         [HttpGet("order/{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetGymAverageAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
@@ -179,6 +185,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("MinCoachAge/{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetGymMiniAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
@@ -205,6 +212,7 @@ namespace MPP.Controllers
 
 
         [HttpGet("filter/{Grade}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> FilterGrade(int Grade)
         {
             if (_dbContext.Gyms == null)
