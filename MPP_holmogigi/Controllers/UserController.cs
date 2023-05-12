@@ -128,7 +128,7 @@ namespace MPP.Controllers
             };
 
             _dbContext.Users.Add(user);
-            //await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             var userDTO = UserToDTO(user);
             userDTO.Password = null;

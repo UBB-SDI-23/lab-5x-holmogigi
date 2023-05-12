@@ -101,13 +101,17 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://bodybuildersmanagement.netlify.app")
+            policy.WithOrigins(
+                "https://bodybuildersmanagement.netlify.app",
+                "http://localhost:5173"
+            )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+
 });
 
-builder.Services.AddHostedService<MPP.ExpiredConfirmationCodeCleanupService>();
+//builder.Services.AddHostedService<MPP.ExpiredConfirmationCodeCleanupService>();
 
 builder.Services.AddControllers(
     options =>

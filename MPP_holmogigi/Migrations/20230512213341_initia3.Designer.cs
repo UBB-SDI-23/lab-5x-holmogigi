@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MPP.Migrations
 {
     [DbContext(typeof(BodyBuildersDatabasesContext))]
-    [Migration("20230512141507_initial")]
-    partial class initial
+    [Migration("20230512213341_initia3")]
+    partial class initia3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,11 +94,11 @@ namespace MPP.Migrations
 
             modelBuilder.Entity("MPP.Models.ConfirmationCode", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(450)");
