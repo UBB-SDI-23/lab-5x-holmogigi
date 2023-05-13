@@ -44,7 +44,7 @@ export const CourseAdd = () => {
 		<Container>
 			<Card>
 				<CardContent>
-					<IconButton component={Link} sx={{ mr: 5 }} to={`/api/BodyBuilders`}>
+					<IconButton component={Link} sx={{ mr: 5 }} to={`/courses`}>
 						<ArrowBackIcon />
 					</IconButton>{" "}
 					<form onSubmit={addCourse}>

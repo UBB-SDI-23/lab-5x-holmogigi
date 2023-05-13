@@ -14,7 +14,7 @@
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useEffect, useState, useCallback } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_API_URL, formatDate} from "../../constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
@@ -22,7 +22,7 @@ import { UserRegisterDTO } from "../../models/UserRegisterDTO";
 import { debounce } from "lodash";
 import { useContext } from "react";
 import { SnackbarContext } from "../SnackbarContext";
-import { getAuthToken } from "../../auth";
+import { getAuthToken, logOut } from "../../auth";
 
 export const UserRegister = () => {
     const navigate = useNavigate();
@@ -40,6 +40,9 @@ export const UserRegister = () => {
         maritalStatus: "",
     });
 
+    useEffect(() => {
+        logOut();
+    }, []);
 
     const addRole = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
@@ -98,136 +101,77 @@ export const UserRegister = () => {
 
     return (
         <Container>
-            <Card sx={{ p: 2 }}>
+            <Card>
                 <CardContent>
-                    <Box display="flex" alignItems="flex-start" sx={{ mb: 4 }}>
-                        <IconButton
-                            disabled
-                            component={Link}
-                            sx={{ mb: 2, mr: 3 }}
-                            to={``}
-                        >
-                            <ArrowBackIcon />
-                        </IconButton>
-                        <h1
-                            style={{
-                                flex: 1,
-                                textAlign: "center",
-                                marginLeft: -64,
-                                marginTop: -4,
-                            }}
-                        >
-                            Register
-                        </h1>
-                    </Box>
-                    <form>
+                    <IconButton component={Link} sx={{ mr: 5 }} to={`/`}>
+                        <ArrowBackIcon />
+                    </IconButton>{" "}
+                    <form onSubmit={addRole}>
                         <TextField
-                            id="name"
+                            id="Name"
                             label="Name"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    name: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, name: event.target.value })}
                         />
                         <TextField
-                            id="password"
+                            id="Password"
                             label="Password"
                             variant="outlined"
-                            type="password"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    password: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, password: event.target.value })}
                         />
 
                         <TextField
-                            id="bio"
+                            id="Bio"
                             label="Bio"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    bio: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, bio: event.target.value })}
                         />
 
                         <TextField
-                            id="location"
+                            id="Location"
                             label="Location"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    location: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, location: event.target.value })}
                         />
 
                         <TextField
-                            id="birthDay"
+                            id="Birthday"
                             label="Birthday"
-                            InputLabelProps={{ shrink: true }}
-                            type="datetime-local"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    birthday: new Date(
-                                        event.target.value
-                                    ).toISOString(),
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, birthday: event.target.value })}
                         />
 
                         <TextField
-                            id="gender"
+                            id="Gender"
                             label="Gender"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    gender: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, gender: event.target.value })}
                         />
+
                         <TextField
-                            id="maritalStatus"
-                            label="Marital Status"
+                            id="MaritalStatus"
+                            label="MaritalStatus"
                             variant="outlined"
                             fullWidth
                             sx={{ mb: 2 }}
-                            onChange={(event) =>
-                                setUser({
-                                    ...user,
-                                    maritalStatus: event.target.value,
-                                })
-                            }
+                            onChange={(event) => setUser({ ...user, maritalStatus: event.target.value })}
                         />
+                        <Button type="submit">Register</Button>
                     </form>
                 </CardContent>
-                <CardActions sx={{ mb: 1, ml: 1, mt: 1 }}>
-                    <Button onClick={UserRegister} variant="contained">
-                        Register
-                    </Button>
-                </CardActions>
+                <CardActions></CardActions>
             </Card>
         </Container>
     );

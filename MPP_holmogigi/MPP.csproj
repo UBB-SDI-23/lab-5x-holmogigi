@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Front_end\src\auth.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Faker.Net" Version="2.0.154" />
@@ -28,6 +32,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -48,6 +56,10 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="_Diagrams\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Front_end\src\auth.ts" />
   </ItemGroup>
 
 </Project>

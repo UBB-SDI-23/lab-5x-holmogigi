@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PFGyjHMO1QAuNsqjntNJ5li9RPgcvlkF5jBFA8wO5WkeVorhpYvLw5HwyF14FhuZ0WH2l556j2JfReYaC3wukA==",
+  "dgSpecHash": "matryQc5OrQKKrerOVHx08QZs0Bimzm92g5LpjxRscTwzaKK1QqIy0cVVy/3WUXO7/r+vTOwY/0i9DgDevKakw==",
   "success": true,
   "projectFilePath": "D:\\UBB FMI\\SEM 4\\SDI\\lab-5x-holmogigi\\MPP_holmogigi\\MPP.csproj",
   "expectedPackageFiles": [
@@ -81,6 +81,7 @@
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\microsoft.typescript.msbuild\\5.0.4\\microsoft.typescript.msbuild.5.0.4.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\7.0.4\\microsoft.visualstudio.web.codegeneration.7.0.4.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\7.0.4\\microsoft.visualstudio.web.codegeneration.core.7.0.4.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\7.0.4\\microsoft.visualstudio.web.codegeneration.design.7.0.4.nupkg.sha512",
