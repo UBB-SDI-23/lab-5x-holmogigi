@@ -73,6 +73,11 @@ namespace MPP.Controllers
         [HttpPost]
         public async Task<ActionResult<GymDTO>> Create(GymDTO gymDTO)
         {
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
             // Validation
             if (gymDTO.Grade>10 || gymDTO.Grade<1)
                 return BadRequest("!ERROR! Ivalid Grade!");
@@ -107,6 +112,13 @@ namespace MPP.Controllers
             if (gym == null)
                 return NotFound();
 
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && gym.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
+
             gym.Name = gymDTO.Name;
             gym.Location = gymDTO.Location;
             gym.Memembership = gymDTO.Memembership;
@@ -136,6 +148,14 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && gym.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
+
             _dbContext.Gyms.Remove(gym);
             await _dbContext.SaveChangesAsync();
 

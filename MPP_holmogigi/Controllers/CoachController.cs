@@ -61,6 +61,11 @@ namespace MPP.Controllers
         [HttpPost]
         public async Task<ActionResult<CoachDTO>> Create(CoachDTO coachDTO)
         {
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
             // Validation
             if (coachDTO.Rate<1)
                 return BadRequest("!ERROR! Invalid Rate!"); 
@@ -98,6 +103,13 @@ namespace MPP.Controllers
                 return NotFound();
             }
 
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && coach.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
+
             coach.Name = coachDTO.Name;
             coach.Age = coachDTO.Age;
             coach. Rate = coachDTO.Rate;
@@ -127,6 +139,14 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && coach.UserId != extracted.Item1)
+                return Unauthorized("You can only delete your own entities.");
+
             _dbContext.Coaches.Remove(coach);
             await _dbContext.SaveChangesAsync();
             return NoContent();

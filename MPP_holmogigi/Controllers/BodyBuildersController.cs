@@ -54,6 +54,10 @@ namespace MPP.Controllers
         [HttpPost]
         public async Task<ActionResult<BodybuilderDTO>> Create(BodybuilderDTO bodybuilder)
         {
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
             // Validation
             if (bodybuilder.Age<1 || bodybuilder.Age > 122)
                 return BadRequest("!ERROR! Invalid Age!");
@@ -65,7 +69,7 @@ namespace MPP.Controllers
                 Weight = bodybuilder.Weight,
                 Height = bodybuilder.Height,
                 Division = bodybuilder.Division,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
 
             _dbContext.Bodybuilders.Add(Body);
@@ -90,6 +94,13 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && bdToUpate.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
 
             bdToUpate.Name = bodybuilder.Name;
             bdToUpate.Age = bodybuilder.Age;
@@ -128,6 +139,13 @@ namespace MPP.Controllers
                 return NotFound();
             }
 
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && bodybuilder.UserId != extracted.Item1)
+                return Unauthorized("You can only delete your own entities.");
+
             _dbContext.Bodybuilders.Remove(bodybuilder);
             await _dbContext.SaveChangesAsync();
             return NoContent();
@@ -154,6 +172,10 @@ namespace MPP.Controllers
         [HttpPost("contest")]
         public async Task<ActionResult<ContestDTO>> PostContest (ContestDTO contest)
         {
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+   
             if (contest.Name.Length < 2 || contest.Location.Length < 2)
                 return BadRequest("!ERROR! Invalid Name or Location!");
 
@@ -215,12 +237,18 @@ namespace MPP.Controllers
         [HttpPut("{id},{id2}/contest")]
         public async Task<IActionResult> UpdateContest(int id, int id2, ContestDTO contest)
         {
-           
             var contestToUpate = await _dbContext.Contests.FindAsync(id, id2);
             if (contestToUpate == null)
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && contestToUpate.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
 
             contestToUpate.DateTime = (DateTime)contest.DateTime;
             contestToUpate.Name = contest.Name;
@@ -246,6 +274,13 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && bodybuilder.UserId != extracted.Item1)
+                return Unauthorized("You can only delete your own entities.");
 
             _dbContext.Contests.Remove(bodybuilder);
             await _dbContext.SaveChangesAsync();
