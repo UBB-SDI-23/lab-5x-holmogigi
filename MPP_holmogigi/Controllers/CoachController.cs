@@ -76,7 +76,7 @@ namespace MPP.Controllers
                 Age = coachDTO.Age,
                 Rate = coachDTO.Rate,
                 GymId = coachDTO.GymId,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
             _dbContext.Coaches.Add(coach);
             await _dbContext.SaveChangesAsync();

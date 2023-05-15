@@ -22,14 +22,14 @@ export const CoachDelete = () => {
                     },
                 })
                 .then(() => {
-                    openSnackbar("success", "Employee deleted successfully!");
+                    openSnackbar("success", "Coach deleted successfully!");
                     navigate("/coaches");
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
                     openSnackbar(
                         "error",
-                        "Failed to delete employee!\n" +
+                        "Failed to delete coach!\n" +
                         (String(reason.response?.data).length > 255
                             ? reason.message
                             : reason.response?.data)
@@ -39,7 +39,7 @@ export const CoachDelete = () => {
             console.log(error);
             openSnackbar(
                 "error",
-                "Failed to delete employee due to an unknown error!"
+                "Failed to delete coach due to an unknown error!"
             );
         }
     };

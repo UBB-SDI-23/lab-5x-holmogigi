@@ -13,7 +13,7 @@
 	Button,
 	TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BACKEND_API_URL , formatDate} from "../../constants";
@@ -22,45 +22,57 @@ import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAccount, getAuthToken, isAuthorized } from "../../auth";
+import axios, { AxiosError } from "axios";
 
 export const AllContests = () => {
-	const [loading, setLoading] = useState(false);
+	const openSnackbar = useContext(SnackbarContext);
+	const [loading, setLoading] = useState(true);
 	const [courses, setCourses] = useState<Contest[]>([]);
 
-	const pageSize = 5;
+	const [pageSize] = useState(getAccount()?.userProfile?.pagePreference ?? 5);
 	const [pageIndex, setPageIndex] = useState(0);
 	const [hasNextPage, setHasNextPage] = useState(true);
 
-	function fetchBodybuilders(page: number): Promise<Contest[]> {
-		return fetch(`${BACKEND_API_URL}/api/BodyBuilders/${page}/${pageSize}/contest`).then((response) => response.json());
-	}
-
-	/*
-	useEffect(() => {
+	const fetchEmployees = async () => {
 		setLoading(true);
-		fetch(`${BACKEND_API_URL}/api/BodyBuilders`)
-			.then((response) => response.json())
-			.then((data) => {
-				setCourses(data);
-				setLoading(false);
-			});
-	}, []);
-	*/
-
-	useEffect(() => {
-		setLoading(true);
-
-		// TODO: fix redundant request
-		fetchBodybuilders(pageIndex)
-			.then((data) => {
-				setCourses(data);
-			})
-			.then(() => {
-				fetchBodybuilders(pageIndex + 1).then((data) => {
-					setHasNextPage(data.length > 0);
+		try {
+			await axios
+				.get<Contest[]>(
+					`${BACKEND_API_URL}/api/Bodybuilders/${pageIndex}/${pageSize}/contest`,
+					{
+						headers: {
+							Authorization: `Bearer ${getAuthToken()}`,
+						},
+					}
+				)
+				.then((response) => {
+					const data = response.data;
+					setCourses(data);
 					setLoading(false);
+				})
+				.catch((reason: AxiosError) => {
+					console.log(reason.message);
+					openSnackbar(
+						"error",
+						"Failed to fetch contests!\n" +
+						(String(reason.response?.data).length > 255
+							? reason.message
+							: reason.response?.data)
+					);
 				});
-			});
+		} catch (error) {
+			console.log(error);
+			openSnackbar(
+				"error",
+				"Failed to fetch contests due to an unknown error!"
+			);
+		}
+	};
+
+	useEffect(() => {
+		fetchEmployees();
 	}, [pageIndex, pageSize]);
 
 
@@ -93,14 +105,20 @@ export const AllContests = () => {
 			<h1>All contests</h1>
 
 			{loading && <CircularProgress />}
-			{!loading && courses.length === 0 && <p> No contests found</p>}
 			{!loading && (
-				<IconButton component={Link} sx={{ mr: 3 }} to={`/contests/add`}>
-					<Tooltip title="Add a new contest" arrow>
-						<AddIcon color="primary" />
-					</Tooltip>
-				</IconButton>
+				<Button
+					title="Add a new contest"
+					component={Link}
+					to={`/contests/add`}
+					disabled={getAccount() === null}
+					variant="text"
+					size="large"
+					sx={{ mr: 3, mb: 2, textTransform: "none" }}
+					startIcon={<AddIcon />}
+				>
+				</Button>
 			)}
+			{!loading && courses.length === 0 && <p> No contests found</p>}
 			{!loading && courses.length > 0 && (
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -141,14 +159,44 @@ export const AllContests = () => {
 										</Tooltip>
 									</IconButton>
 
-									<IconButton component={Link} sx={{ mr: 3 }} to={`/contests/${course.bodybuilderId}/${course.coachId}/edit`}>
-										<EditIcon />
+									<IconButton
+										component={Link}
+										sx={{ mr: 3 }}
+										to={`/contests/${course.bodybuilderId}/${course.coachId}/edit`}
+										disabled={
+											!isAuthorized(
+												course.user?.id
+											)
+										}
+									>
+										<Tooltip
+											title="Edit employee"
+											arrow
+										>
+											<EditIcon />
+										</Tooltip>
 									</IconButton>
 
-									<IconButton component={Link} sx={{ mr: 3 }} to={`/contests/${course.bodybuilderId}/${course.coachId}/delete`}>
-										<DeleteForeverIcon sx={{ color: "red" }} />
+									<IconButton
+										component={Link}
+										to={`/contests/${course.bodybuilderId}/${course.coachId}/delete`}
+										disabled={
+											!isAuthorized(
+												course.user?.id
+											)
+										}
+										sx={{
+											color: "red",
+										}}
+									>
+										<Tooltip
+											title="Delete employee"
+											arrow
+										>
+											<DeleteForeverIcon />
+										</Tooltip>
 									</IconButton>
-
+									
 								</TableRow>
 							))}
 						</TableBody>

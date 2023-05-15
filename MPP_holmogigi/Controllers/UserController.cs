@@ -444,6 +444,46 @@ namespace MPP.Controllers
             return NoContent();
         }
 
+        [HttpDelete("Bodybuilders/{count}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeleteBodybuilders(int count)
+        {
+            var parameter = new SqlParameter("@Count", count);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Bodybuilders]", parameter);
+
+            return Ok($"Deleted {affected} bodybuilders.");
+        }
+
+        [HttpDelete("Contests/{count}")]
+        [Role(AccessLevel.Admin)]
+        public async Task<IActionResult> DeleteContests(int count)
+        {
+            var parameter = new SqlParameter("@Count", count);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Contests]", parameter);
+
+            return Ok($"Deleted {affected} contests.");
+        }
+
+        [HttpDelete("Coaches/{count}")]
+        [Role(AccessLevel.Admin)]
+        public async Task<IActionResult> DeleteCoaches(int count)
+        {
+            var parameter = new SqlParameter("@Count", count);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Coaches]", parameter);
+
+            return Ok($"Deleted {affected} coaches.");
+        }
+
+        [HttpDelete("Gyms/{count}")]
+        [Role(AccessLevel.Admin)]
+        public async Task<IActionResult> DeleteGyms(int count)
+        {
+            var parameter = new SqlParameter("@Count", count);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Gyms]", parameter);
+
+            return Ok($"Deleted {affected} gyms.");
+        }
+
         private bool UserExists(long id)
         {
             return _dbContext.Users.Any(e => e.Id == id);

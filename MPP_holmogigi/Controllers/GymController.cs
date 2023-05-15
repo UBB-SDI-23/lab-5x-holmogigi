@@ -88,7 +88,7 @@ namespace MPP.Controllers
                 Location = gymDTO.Location,
                 Memembership = gymDTO.Memembership,
                 Grade = gymDTO.Grade,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
 
             _dbContext.Gyms.Add(gym);
@@ -103,11 +103,7 @@ namespace MPP.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, GymDTO gymDTO)
         {
-            if (id != gymDTO.Id)
-            {
-                return BadRequest();
-            }
-
+           
             var gym = await _dbContext.Gyms.FindAsync(id);
             if (gym == null)
                 return NotFound();

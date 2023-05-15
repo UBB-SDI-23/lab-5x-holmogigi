@@ -140,7 +140,7 @@ export const AllCoaches = () => {
 					console.log(reason.message);
 					openSnackbar(
 						"error",
-						"Failed to fetch employees!\n" +
+						"Failed to fetch coaches!\n" +
 						(String(reason.response?.data).length > 255
 							? reason.message
 							: reason.response?.data)
@@ -150,7 +150,7 @@ export const AllCoaches = () => {
 			console.log(error);
 			openSnackbar(
 				"error",
-				"Failed to fetch employees due to an unknown error!"
+				"Failed to fetch coaches due to an unknown error!"
 			);
 		}
 	};

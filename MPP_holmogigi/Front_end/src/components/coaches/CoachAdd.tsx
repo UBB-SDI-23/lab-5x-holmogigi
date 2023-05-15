@@ -8,19 +8,21 @@
 	TextField,
 } from "@mui/material";
 import { Container } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Coach } from "../../models/Coach";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { debounce } from "lodash";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const CoachAdd = () => {
 	const navigate = useNavigate();
-
+	const openSnackbar = useContext(SnackbarContext);
 	const [course, setCourse] = useState<Coach>({
 		name: "",
 		age: 1,
@@ -31,11 +33,32 @@ export const CoachAdd = () => {
 	const addCourse = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			await axios.post(`${BACKEND_API_URL}/api/Coach`, course);
-			navigate("/coaches");
+			await axios
+				.post(`${BACKEND_API_URL}/api/Coach`, course, {
+					headers: {
+						Authorization: `Bearer ${getAuthToken()}`,
+					},
+				})
+				.then(() => {
+					openSnackbar("success", "Coach added successfully!");
+					navigate("/coaches");
+				})
+				.catch((reason: AxiosError) => {
+					console.log(reason.message);
+					openSnackbar(
+						"error",
+						"Failed to add coach!\n" +
+						(String(reason.response?.data).length > 255
+							? reason.message
+							: reason.response?.data)
+					);
+				});
 		} catch (error) {
 			console.log(error);
-			alert("!ERROR! Invalid coach rate (rate>1)!")
+			openSnackbar(
+				"error",
+				"Failed to add coach due to an unknown error!"
+			);
 		}
 	};
 

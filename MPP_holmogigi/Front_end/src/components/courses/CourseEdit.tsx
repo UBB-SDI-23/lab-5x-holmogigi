@@ -12,15 +12,19 @@
     FormControl,
     InputLabel,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
 import { Bodybuilder } from "../../models/Bodybuilder";
 import { BACKEND_API_URL } from "../../constants";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const CourseEdit = () => {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const openSnackbar = useContext(SnackbarContext);
+    const [loading, setLoading] = useState(true);
     const { courseId } = useParams();
     const [courses, setCourses] = useState<Bodybuilder>({
         name: "",
@@ -30,41 +34,82 @@ export const CourseEdit = () => {
         division: "",
     });
 
-    useEffect(() => {
-        const fetchEmployee = async () => {
-            const response = await fetch(`${BACKEND_API_URL}/api/BodyBuilders/${courseId}`);
-            const courses = await response.json();
-            setCourses({
-                id: courses.id,
-                name: courses.name,
-                age: courses.age,
-                weight: courses.weight,
-                height: courses.height,
-                division: courses.division,
-            });
-            setLoading(false);
-        };
-        fetchEmployee();
-    }, [courseId]);
+ 
+    const fetchEmployee = async () => {
+        setLoading(true);
+        try {
+            await axios
+                .get<Bodybuilder>(
+                    `${BACKEND_API_URL}/api/Bodybuilders/${courseId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    const employee = response.data;
+                    setCourses(employee);
+                    setLoading(false);
+                })
+                .catch((reason: AxiosError) => {
+                    console.log(reason.message);
+                    openSnackbar(
+                        "error",
+                        "Failed to fetch bodybuilder details!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
+                });
+        } catch (error) {
+            console.log(error);
+            openSnackbar(
+                "error",
+                "Failed to fetch bodybuilder details due to an unknown error!"
+            );
+        }
+    };
+ 
+   
 
     const handleUpdate = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
         try {
             await axios
-                .put(`${BACKEND_API_URL}/api/BodyBuilders/${courseId}`, courses)
+                .put(
+                    `${BACKEND_API_URL}/api/Bodybuilders/${courseId}`,
+                    courses,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
                 .then(() => {
-                    alert("Bodybuilder updated successfully!");
+                    openSnackbar("success", "Bodybuilder updated successfully!");
+                    navigate("/courses");
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
-                    alert("Failed to update bodybuilder!");
+                    openSnackbar(
+                        "error",
+                        "Failed to update bodybuilder!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
                 });
         } catch (error) {
             console.log(error);
-            alert("Failed to update bodybuilder!");
+            openSnackbar(
+                "error",
+                "Failed to update bodybuilder due to an unknown error!"
+            );
         }
     };
 
+   
     const handleCancel = (event: { preventDefault: () => void }) => {
         event.preventDefault();  
     };

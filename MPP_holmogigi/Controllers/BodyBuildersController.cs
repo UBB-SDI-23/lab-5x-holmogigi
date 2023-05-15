@@ -21,10 +21,10 @@ namespace MPP.Controllers
             _dbContext = dbContext;
         }
 
-        
+
         [HttpGet("{page}/{pageSize}")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Bodybuilder>>> GetAllPages(int page=0, int pageSize =10)
+        public async Task<ActionResult<IEnumerable<Bodybuilder>>> GetAllPages(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Bodybuilders
                 .Include(x => x.User)
@@ -59,7 +59,7 @@ namespace MPP.Controllers
                 return Unauthorized("Invalid token.");
 
             // Validation
-            if (bodybuilder.Age<1 || bodybuilder.Age > 122)
+            if (bodybuilder.Age < 1 || bodybuilder.Age > 122)
                 return BadRequest("!ERROR! Invalid Age!");
 
             var Body = new Bodybuilder
@@ -84,11 +84,7 @@ namespace MPP.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, BodybuilderDTO bodybuilder)
         {
-            if (id != bodybuilder.Id)
-            {
-                return BadRequest();
-            }
-
+           
             var bdToUpate = await _dbContext.Bodybuilders.FindAsync(id);
             if (bdToUpate == null)
             {
@@ -108,14 +104,7 @@ namespace MPP.Controllers
             bdToUpate.Height = bodybuilder.Height;
             bdToUpate.Division = bodybuilder.Division;
 
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!BdExists(id))
-            {
-                return NotFound();
-            }
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
@@ -194,7 +183,7 @@ namespace MPP.Controllers
                 DateTime = DateTime.Now,
                 Name = contest.Name,
                 Location = contest.Location,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
 
             _dbContext.Contests.Add (contestt);
