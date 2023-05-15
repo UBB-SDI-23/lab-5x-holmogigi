@@ -39,6 +39,7 @@ import { UserRegisterConfirm } from "./components/users/UserRegisterConfirm";
 import { UserLogin } from "./components/users/UserLogin";
 import { SnackbarContext } from "./components/SnackbarContext";
 import { AdminPage } from "./components/users/AdminPage";
+import { AllUsers } from "./components/users/AllUsers";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 	props,
@@ -106,6 +107,7 @@ function App()
 						/>
 						<Route path="/users/login" element={<UserLogin />} />
 						<Route path="/users/admin" element={<AdminPage />} />
+						<Route path="/users" element={<AllUsers />} />
 
 					<Route path="/courses" element={<AllCourses />} />
 					<Route path="/courses/:courseId/details" element={<CourseDetails />} />

@@ -16,7 +16,7 @@ using NuGet.Common;
 using MPP.DTOs;
 using MPP.Models;
 using MPP.Database;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace MPP.Controllers
 {
@@ -270,7 +270,7 @@ namespace MPP.Controllers
                 .CountAsync();
 
             var parameter = new SqlParameter("@PagePreference", pref);
-            await _dbContext.Database.ExecuteSqlRawAsync("UPDATE [UserProfiles] SET [PagePreference] = @PagePreference", parameter);
+            await _dbContext.Database.ExecuteSqlRawAsync("UPDATE UserProfiles SET PagePreference = @PagePreference", parameter);
 
             return Ok($"Updated {count} users with the new preference.");
         }
@@ -449,7 +449,7 @@ namespace MPP.Controllers
         public async Task<IActionResult> DeleteBodybuilders(int count)
         {
             var parameter = new SqlParameter("@Count", count);
-            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Bodybuilders]", parameter);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM Bodybuilders", parameter);
 
             return Ok($"Deleted {affected} bodybuilders.");
         }
@@ -459,7 +459,7 @@ namespace MPP.Controllers
         public async Task<IActionResult> DeleteContests(int count)
         {
             var parameter = new SqlParameter("@Count", count);
-            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Contests]", parameter);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM Contests", parameter);
 
             return Ok($"Deleted {affected} contests.");
         }
@@ -469,7 +469,7 @@ namespace MPP.Controllers
         public async Task<IActionResult> DeleteCoaches(int count)
         {
             var parameter = new SqlParameter("@Count", count);
-            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Coaches]", parameter);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM Coaches", parameter);
 
             return Ok($"Deleted {affected} coaches.");
         }
@@ -479,7 +479,7 @@ namespace MPP.Controllers
         public async Task<IActionResult> DeleteGyms(int count)
         {
             var parameter = new SqlParameter("@Count", count);
-            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM [Gyms]", parameter);
+            int affected = await _dbContext.Database.ExecuteSqlRawAsync("DELETE TOP(@Count) FROM Gyms", parameter);
 
             return Ok($"Deleted {affected} gyms.");
         }

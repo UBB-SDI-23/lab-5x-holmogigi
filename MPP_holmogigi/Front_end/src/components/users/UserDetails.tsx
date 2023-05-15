@@ -75,7 +75,7 @@ export const UserDetails = () => {
         try {
             await axios
                 .patch(
-                    `${BACKEND_API_URL}/api/Users/${userId}/${pref}`,
+                    `${BACKEND_API_URL}/api/Users/${userId}/PagePreference/${pref}`,
                     {},
                     {
                         headers: {
@@ -85,7 +85,7 @@ export const UserDetails = () => {
                 )
                 .then(() => {
                     openSnackbar("success", "Preference updated successfully!");
-                    // todo: fix some inconsistencies with new page size
+                   
                     if (user && user.userProfile) {
                         user.userProfile.pagePreference = pref;
                         updatePref(user.id, pref);
@@ -217,7 +217,12 @@ export const UserDetails = () => {
                                             inputProps={{
                                                 min: 1,
                                                 style: { textAlign: "center" },
-                                            }}
+                                        }}
+                                        onChange={(event) =>
+                                            setPreferenceText(
+                                                event.target.value
+                                            )
+                                        }
                                             onKeyPress={handleInputKeyPress}
                                             variant="outlined"
                                             size="small"

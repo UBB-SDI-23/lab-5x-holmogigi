@@ -81,7 +81,7 @@ export const AdminPage = () => {
         try {
             await axios
                 .patch(
-                    `${BACKEND_API_URL}/users/pagepreferences/${pref}`,
+                    `${BACKEND_API_URL}/api/Users/PagePreferences/${pref}`,
                     {},
                     {
                         headers: {
