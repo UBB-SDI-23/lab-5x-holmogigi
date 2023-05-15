@@ -277,7 +277,7 @@ namespace MPP.Controllers
 
         [HttpPatch("{id}/AccessLevel/{accessLevel}")]
         [Role(AccessLevel.Admin)]
-        public async Task<ActionResult<UserDTO>> PatchAccessLevel(long id, AccessLevel accessLevel)
+        public async Task<ActionResult<UserDTO>> PatchAccessLevel(int id, AccessLevel accessLevel)
         {
             if (_dbContext.Users == null)
                 return NotFound();
@@ -310,7 +310,7 @@ namespace MPP.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<UserProfileDTO>> GetUser(long id)
+        public async Task<ActionResult<UserProfileDTO>> GetUser(int id)
         {
             if (_dbContext.Users == null)
                 return NotFound();
@@ -375,7 +375,7 @@ namespace MPP.Controllers
 
         [HttpPut("{id}")]
         [Role(AccessLevel.Admin)]
-        public async Task<IActionResult> PutUser(long id, UserDTO userDTO)
+        public async Task<IActionResult> PutUser(int id, UserDTO userDTO)
         {
             if (id != userDTO.Id)
                 return BadRequest();
@@ -404,7 +404,7 @@ namespace MPP.Controllers
         public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDTO)
         {
             if (_dbContext.Users == null)
-                return Problem("Entity set 'StoreContext.Users' is null.");
+                return Problem("Entity set is null.");
 
             var user = new User
             {
@@ -426,21 +426,16 @@ namespace MPP.Controllers
                 UserToDTO(user));
         }
 
-        // DELETE: api/Users/5
         [HttpDelete("{id}")]
         [Role(AccessLevel.Admin)]
-        public async Task<IActionResult> DeleteUser(long id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_dbContext.Users == null)
-                return NotFound();
-
             var user = await _dbContext.Users.FindAsync(id);
             if (user == null)
                 return NotFound();
 
             _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
-
             return NoContent();
         }
 

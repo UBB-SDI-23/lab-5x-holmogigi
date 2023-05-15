@@ -167,20 +167,7 @@ export const AllUsers = () => {
                                         </Tooltip>
                                     </IconButton>
 
-                                    <IconButton
-                                        component={Link}
-                                        to={`/users/${user.id}/delete`}
-                                        sx={{
-                                            color: "red",
-                                        }}
-                                    >
-                                        <Tooltip
-                                            title="Delete user"
-                                            arrow
-                                        >
-                                            <DeleteForeverIcon />
-                                        </Tooltip>
-                                    </IconButton>
+                                    
 
                                 </TableRow>
                             ))}

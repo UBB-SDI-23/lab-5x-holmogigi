@@ -7,3 +7,9 @@ export function formatDate(date: Date | string | undefined) {
 }
 
 export const BACKEND_API_URL = PROD_BACKEND_API_URL;
+
+export const getEnumValues = (e: any) => {
+	return Object.keys(e)
+		.filter((key) => isNaN(Number(key)))
+		.map((key) => e[key]);
+};
