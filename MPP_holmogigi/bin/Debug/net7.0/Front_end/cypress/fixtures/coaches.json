@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "testing",
+    "age": 21,
+    "rate": 8,
+    "gymId": 1
+  },
+  {
+    "id": 2,
+    "name": "testing1",
+    "age": 22,
+    "rate": 7,
+    "gymId": 2
+  },
+  {
+    "id": 3,
+    "name": "testing2",
+    "age": 20,
+    "rate": 6,
+    "gymId": 3
+  }
+]

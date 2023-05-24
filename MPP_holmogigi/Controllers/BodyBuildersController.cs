@@ -21,7 +21,6 @@ namespace MPP.Controllers
             _dbContext = dbContext;
         }
 
-
         [HttpGet("{page}/{pageSize}")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Bodybuilder>>> GetAllPages(int page = 0, int pageSize = 10)
@@ -30,6 +29,15 @@ namespace MPP.Controllers
                 .Include(x => x.User)
                 .Skip(page * pageSize)
                 .Take(pageSize)
+                .ToListAsync();
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BodybuilderDTO>>> GetAll()
+        {
+            return await _dbContext.Bodybuilders
+                .Select(x => BdtoDTO(x))
                 .ToListAsync();
         }
 

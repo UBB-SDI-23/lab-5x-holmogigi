@@ -129,7 +129,7 @@ export const AllCourses = () => {
 
 
 	return (
-		<Container>
+		<Container data-testid="test-all-bodybuilders-container">
 			<h1>All bodybuilders</h1>
 
 			{loading && <CircularProgress />}

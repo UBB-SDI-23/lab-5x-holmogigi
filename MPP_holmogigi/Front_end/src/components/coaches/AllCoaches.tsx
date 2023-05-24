@@ -187,7 +187,7 @@ export const AllCoaches = () => {
 
 
 	return (
-		<Container>
+		<Container data-testid="test-all-coaches-container">
 			<h1>All coaches</h1>
 
 			{loading && <CircularProgress />}

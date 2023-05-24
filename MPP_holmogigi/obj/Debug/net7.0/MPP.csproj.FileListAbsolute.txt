@@ -1242,3 +1242,6 @@ D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Bogus.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Faker.Net.6.0.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\de-DE\Faker.Net.6.0.resources.dll
 D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Front_end\cypress\fixtures\bodybuilder.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Front_end\cypress\fixtures\coaches.json
+D:\UBB FMI\SEM 4\SDI\lab-5x-holmogigi\MPP_holmogigi\bin\Debug\net7.0\Front_end\cypress\fixtures\gyms.json

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "testing",
+    "location": "testing",
+    "memembership": 100,
+    "grade": 9
+  },
+  {
+    "id": 2,
+    "name": "testing1",
+    "location": "testing1",
+    "memembership": 101,
+    "grade": 8
+  },
+  {
+    "id": 3,
+    "name": "testing2",
+    "location": "testing2",
+    "memembership": 101,
+    "grade": 7
+  }
+]
