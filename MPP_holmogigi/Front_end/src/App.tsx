@@ -32,7 +32,7 @@ import { CoachEdit } from "./components/coaches/CoachEdit";
 import { FilterAge } from "./components/filters/FilterAge";
 import { GymMinAge } from "./components/filters/GymMinAge";
 import { GymOrderSmall } from "./components/filters/GymOrderSmall";
-
+import { AIModel } from "./components/AImodel";
 import { UserDetails } from "./components/users/UserDetails";
 import { UserRegister } from "./components/users/UserRegister";
 import { UserRegisterConfirm } from "./components/users/UserRegisterConfirm";
@@ -117,6 +117,7 @@ function App()
 					<Route path="/courses/:courseId/edit" element={<CourseEdit />} />
 					<Route path="/courses/:courseId/delete" element={<CourseDelete />} />
 					<Route path="/courses/add" element={<CourseAdd />} />
+					<Route path="/AImodel" element={<AIModel />} />
 
 					<Route path="/coaches" element={<AllCoaches />} />
 					<Route path="/coaches/:courseId/details" element={<CoachDetails/>} />

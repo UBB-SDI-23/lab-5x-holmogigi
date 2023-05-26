@@ -7,6 +7,7 @@ import { useContext } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { SnackbarContext } from "./SnackbarContext";
 import { AccessLevel } from "../models/User";
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export const AppMenu = () => {
 
@@ -167,6 +168,7 @@ export const AppMenu = () => {
 						>
 						REGISTER
 					</Button>
+
 					<IconButton
 						size="large"
 						edge="start"
@@ -181,7 +183,16 @@ export const AppMenu = () => {
 					>
 						<LogoutIcon />
 					</IconButton>
-					
+
+					<Button
+						component={Link}
+						sx={{ mr: 3 }}
+						to={`/AImodel`}						
+						startIcon={<SmartToyIcon />}
+					>
+					AI
+					</Button>
+								
 				</Toolbar>
 			</AppBar>
 		</Box>
