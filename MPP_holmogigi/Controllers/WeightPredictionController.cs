@@ -15,21 +15,6 @@ namespace MPP.Controllers
     [ApiController]
     public class WeightPredictionController : ControllerBase
     {
-        public class WeightPredictionData
-        {
-            [ColumnName("division")]
-            public string Division { get; set; }
-
-            [ColumnName("age")]
-            public int Age { get; set; }
-        }
-
-        // Define a class to hold the prediction result
-        public class WeightPredictionResult
-        {
-            public int Prediction { get; set; }
-        }
-
         [HttpGet("{division}/{age}/{height}")]
         [AllowAnonymous]
         public IActionResult GetWeightPrediction(string division, int age, int height)
