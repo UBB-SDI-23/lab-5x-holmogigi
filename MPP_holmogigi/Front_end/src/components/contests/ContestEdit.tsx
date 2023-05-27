@@ -12,15 +12,19 @@
     FormControl,
     InputLabel,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
 import { Contest } from "../../models/Contest";
 import { BACKEND_API_URL } from "../../constants";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const ContestEdit = () => {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const openSnackbar = useContext(SnackbarContext);
+    const [loading, setLoading] = useState(true);
     const { courseId } = useParams();
     const { courseId2 } = useParams();
     const [courses, setCourses] = useState<Contest>({
@@ -31,37 +35,76 @@ export const ContestEdit = () => {
         bodybuilderid: 0
     });
 
-    useEffect(() => {
-        const fetchEmployee = async () => {
-            const response = await fetch(`${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`);
-            const courses = await response.json();
-            setCourses({
-                datetime: courses.datetime,
-                name: courses.name,
-                location: courses.location,
-                coachid: courses.coachid,
-                bodybuilderid: courses.bodybuilderid,
-            });
-            setLoading(false);
-        };
-        fetchEmployee();
-    }, [courseId]);
+    const fetchEmployee = async () => {
+        setLoading(true);
+        try {
+            await axios
+                .get<Contest>(
+                    `${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    const employee = response.data;
+                    setCourses(employee);
+                    setLoading(false);
+                })
+                .catch((reason: AxiosError) => {
+                    console.log(reason.message);
+                    openSnackbar(
+                        "error",
+                        "Failed to fetch contest details!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
+                });
+        } catch (error) {
+            console.log(error);
+            openSnackbar(
+                "error",
+                "Failed to fetch contest details due to an unknown error!"
+            );
+        }
+    };
+
 
     const handleUpdate = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
         try {
             await axios
-                .put(`${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`, courses)
+                .put(
+                    `${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`,
+                    courses,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
                 .then(() => {
-                    alert("Contest updated successfully!");
+                    openSnackbar("success", "Contest updated successfully!");
+                    navigate("/contests");
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
-                    alert("Failed to update contest!");
+                    openSnackbar(
+                        "error",
+                        "Failed to update contest!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
                 });
         } catch (error) {
             console.log(error);
-            alert("Failed to update contest!");
+            openSnackbar(
+                "error",
+                "Failed to update contest due to an unknown error!"
+            );
         }
     };
 

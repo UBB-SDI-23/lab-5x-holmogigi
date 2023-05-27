@@ -32,12 +32,15 @@ import { CoachEdit } from "./components/coaches/CoachEdit";
 import { FilterAge } from "./components/filters/FilterAge";
 import { GymMinAge } from "./components/filters/GymMinAge";
 import { GymOrderSmall } from "./components/filters/GymOrderSmall";
-
+import { AIModel } from "./components/AImodel";
 import { UserDetails } from "./components/users/UserDetails";
 import { UserRegister } from "./components/users/UserRegister";
 import { UserRegisterConfirm } from "./components/users/UserRegisterConfirm";
 import { UserLogin } from "./components/users/UserLogin";
 import { SnackbarContext } from "./components/SnackbarContext";
+import { AdminPage } from "./components/users/AdminPage";
+import { AllUsers } from "./components/users/AllUsers";
+import { UserEdit } from "./components/users/UserEdit";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 	props,
@@ -103,14 +106,18 @@ function App()
 							path="/users/register/confirm/:code"
 							element={<UserRegisterConfirm />}
 						/>
-						<Route path="/users/login" element={<UserLogin />} />	
-					
+						<Route path="/users/login" element={<UserLogin />} />
+						<Route path="/users/admin" element={<AdminPage />} />
+						<Route path="/users" element={<AllUsers />} />
+						<Route path="/users/:userId/edit" element={<UserEdit />} />
+						
 
 					<Route path="/courses" element={<AllCourses />} />
 					<Route path="/courses/:courseId/details" element={<CourseDetails />} />
 					<Route path="/courses/:courseId/edit" element={<CourseEdit />} />
 					<Route path="/courses/:courseId/delete" element={<CourseDelete />} />
 					<Route path="/courses/add" element={<CourseAdd />} />
+					<Route path="/AImodel" element={<AIModel />} />
 
 					<Route path="/coaches" element={<AllCoaches />} />
 					<Route path="/coaches/:courseId/details" element={<CoachDetails/>} />

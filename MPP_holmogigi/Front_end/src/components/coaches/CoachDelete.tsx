@@ -1,19 +1,48 @@
 ﻿import { Container, Card, CardContent, IconButton, CardActions, Button } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { BACKEND_API_URL } from "../../constants";
+import { useContext } from "react";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const CoachDelete = () => {
-	const { courseId } = useParams();
 	const navigate = useNavigate();
+	const openSnackbar = useContext(SnackbarContext);
+	const { courseId } = useParams();
 
 	const handleDelete = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		await axios.delete(`${BACKEND_API_URL}/api/Coach/${courseId}`);
-		// go to courses list
-		navigate("/coaches");
-	};
+        try {
+            await axios
+                .delete(`${BACKEND_API_URL}/api/Coach/${courseId}`, {
+                    headers: {
+                        Authorization: `Bearer ${getAuthToken()}`,
+                    },
+                })
+                .then(() => {
+                    openSnackbar("success", "Coach deleted successfully!");
+                    navigate("/coaches");
+                })
+                .catch((reason: AxiosError) => {
+                    console.log(reason.message);
+                    openSnackbar(
+                        "error",
+                        "Failed to delete coach!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
+                });
+        } catch (error) {
+            console.log(error);
+            openSnackbar(
+                "error",
+                "Failed to delete coach due to an unknown error!"
+            );
+        }
+    };
 
 	const handleCancel = (event: { preventDefault: () => void }) => {
 		event.preventDefault();

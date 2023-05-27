@@ -1,19 +1,48 @@
 ﻿import { Container, Card, CardContent, IconButton, CardActions, Button } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { BACKEND_API_URL } from "../../constants";
+import { useContext } from "react";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const ContestDelete = () => {
+	const navigate = useNavigate();
+	const openSnackbar = useContext(SnackbarContext);
 	const { courseId } = useParams();
 	const { courseId2 } = useParams();
-	const navigate = useNavigate();
 
 	const handleDelete = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		await axios.delete(`${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`);
-		// go to courses list
-		navigate("/contests");
+		try {
+			await axios
+				.delete(`${BACKEND_API_URL}/api/BodyBuilders/${courseId},${courseId2}/contest`, {
+					headers: {
+						Authorization: `Bearer ${getAuthToken()}`,
+					},
+				})
+				.then(() => {
+					openSnackbar("success", "Contests deleted successfully!");
+					navigate("/contests");
+				})
+				.catch((reason: AxiosError) => {
+					console.log(reason.message);
+					openSnackbar(
+						"error",
+						"Failed to delete contests!\n" +
+						(String(reason.response?.data).length > 255
+							? reason.message
+							: reason.response?.data)
+					);
+				});
+		} catch (error) {
+			console.log(error);
+			openSnackbar(
+				"error",
+				"Failed to delete contests due to an unknown error!"
+			);
+		}
 	};
 
 	const handleCancel = (event: { preventDefault: () => void }) => {

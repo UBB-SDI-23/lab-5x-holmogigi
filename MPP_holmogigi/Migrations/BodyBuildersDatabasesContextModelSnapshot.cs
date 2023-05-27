@@ -91,11 +91,11 @@ namespace MPP.Migrations
 
             modelBuilder.Entity("MPP.Models.ConfirmationCode", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(450)");
@@ -210,8 +210,11 @@ namespace MPP.Migrations
 
             modelBuilder.Entity("MPP.Models.UserProfile", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
@@ -231,7 +234,14 @@ namespace MPP.Migrations
                     b.Property<int>("PagePreference")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.Property<int?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -315,6 +325,7 @@ namespace MPP.Migrations
                     b.HasOne("MPP.Models.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("MPP.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

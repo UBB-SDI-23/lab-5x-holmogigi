@@ -13,7 +13,7 @@
 	Button,
 	TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
@@ -22,12 +22,16 @@ import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAccount, getAuthToken, isAuthorized } from "../../auth";
+import axios, { AxiosError } from "axios";
 
 export const AllGyms = () => {
-	const [loading, setLoading] = useState(false);
+	const openSnackbar = useContext(SnackbarContext);
+	const [loading, setLoading] = useState(true);
 	const [courses, setCourses] = useState<Gym[]>([]);
 
-	const pageSize = 5;
+	const [pageSize] = useState(getAccount()?.userProfile?.pagePreference ?? 5);
 	const [pageIndex, setPageIndex] = useState(0);
 	const [hasNextPage, setHasNextPage] = useState(true);
 
@@ -57,36 +61,44 @@ export const AllGyms = () => {
 	}, [sorting]);
 
 
-	function fetchBodybuilders(page: number): Promise<Gym[]> {
-		return fetch(`${BACKEND_API_URL}/api/Gym/${page}/${pageSize}/special`).then((response) => response.json());
-	}
-
-	/*
-	useEffect(() => {
+	const fetchEmployees = async () => {
 		setLoading(true);
-		fetch(`${BACKEND_API_URL}/api/BodyBuilders`)
-			.then((response) => response.json())
-			.then((data) => {
-				setCourses(data);
-				setLoading(false);
-			});
-	}, []);
-	*/
-
-	useEffect(() => {
-		setLoading(true);
-
-		// TODO: fix redundant request
-		fetchBodybuilders(pageIndex)
-			.then((data) => {
-				setCourses(data);
-			})
-			.then(() => {
-				fetchBodybuilders(pageIndex + 1).then((data) => {
-					setHasNextPage(data.length > 0);
+		try {
+			await axios
+				.get<Gym[]>(
+					`${BACKEND_API_URL}/api/Gym/${pageIndex}/${pageSize}/special`,
+					{
+						headers: {
+							Authorization: `Bearer ${getAuthToken()}`,
+						},
+					}
+				)
+				.then((response) => {
+					const data = response.data;
+					setCourses(data);
 					setLoading(false);
+				})
+				.catch((reason: AxiosError) => {
+					console.log(reason.message);
+					openSnackbar(
+						"error",
+						"Failed to fetch gyms!\n" +
+						(String(reason.response?.data).length > 255
+							? reason.message
+							: reason.response?.data)
+					);
 				});
-			});
+		} catch (error) {
+			console.log(error);
+			openSnackbar(
+				"error",
+				"Failed to fetch gyms due to an unknown error!"
+			);
+		}
+	};
+
+	useEffect(() => {
+		fetchEmployees();
 	}, [pageIndex, pageSize]);
 
 
@@ -117,18 +129,24 @@ export const AllGyms = () => {
 
 
 	return (
-		<Container>
+		<Container data-testid="test-all-gyms-container" >
 			<h1>All gyms</h1>
 
 			{loading && <CircularProgress />}
-			{!loading && courses.length === 0 && <p> No gyms found</p>}
 			{!loading && (
-				<IconButton component={Link} sx={{ mr: 3 }} to={`/gyms/add`}>
-					<Tooltip title="Add a new gym" arrow>
-						<AddIcon color="primary" />
-					</Tooltip>
-				</IconButton>
+				<Button
+					title="Add a new gym"
+					component={Link}
+					to={`/gyms/add`}
+					disabled={getAccount() === null}
+					variant="text"
+					size="large"
+					sx={{ mr: 3, mb: 2, textTransform: "none" }}
+					startIcon={<AddIcon />}
+				>
+				</Button>
 			)}
+			{!loading && courses.length === 0 && <p> No gyms found</p>}
 			{!loading && courses.length > 0 && (
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -177,12 +195,43 @@ export const AllGyms = () => {
 										</Tooltip>
 									</IconButton>
 
-									<IconButton component={Link} sx={{ mr: 3 }} to={`/gyms/${course.id}/edit`}>
-										<EditIcon />
+									<IconButton
+										component={Link}
+										sx={{ mr: 3 }}
+										to={`/gyms/${course.id}/edit`}
+										disabled={
+											!isAuthorized(
+												course.user?.id
+											)
+										}
+									>
+										<Tooltip
+											title="Edit gym"
+											arrow
+										>
+											<EditIcon />
+										</Tooltip>
 									</IconButton>
 
-									<IconButton component={Link} sx={{ mr: 3 }} to={`/gyms/${course.id}/delete`}>
-										<DeleteForeverIcon sx={{ color: "red" }} />
+
+									<IconButton
+										component={Link}
+										to={`/gyms/${course.id}/delete`}
+										disabled={
+											!isAuthorized(
+												course.user?.id
+											)
+										}
+										sx={{
+											color: "red",
+										}}
+									>
+										<Tooltip
+											title="Delete gym"
+											arrow
+										>
+											<DeleteForeverIcon />
+										</Tooltip>
 									</IconButton>
 
 								</TableRow>

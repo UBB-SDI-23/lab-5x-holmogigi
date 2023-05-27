@@ -5,9 +5,11 @@ namespace MPP.DTOs
     public class UserProfileDTO
     {
         public virtual int Id { get; set; }
+
         public virtual string? Name { get; set; }
         public virtual string? Password { get; set; }
 
+        public virtual AccessLevel AccessLevel { get; set; }
         public virtual UserProfile UserProfile { get; set; } = null!;
 
         public virtual int BodybuildersCount { get; set; }

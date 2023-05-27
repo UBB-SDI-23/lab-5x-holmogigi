@@ -12,15 +12,19 @@
     FormControl,
     InputLabel,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
 import { Coach } from "../../models/Coach";
 import { BACKEND_API_URL } from "../../constants";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const CoachEdit = () => {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const openSnackbar = useContext(SnackbarContext);
+    const [loading, setLoading] = useState(true);
     const { courseId } = useParams();
     const [courses, setCourses] = useState<Coach>({
         name: "",
@@ -29,19 +33,44 @@ export const CoachEdit = () => {
         gymId: 1
     });
 
+    const fetchEmployee = async () => {
+            setLoading(true);
+        try {
+            await axios
+                .get<Coach>(
+                    `${BACKEND_API_URL}/api/Coach/${courseId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
+            .then((response) => {
+                const employee = response.data;
+                setCourses(employee);
+                setLoading(false);
+        })
+                .catch((reason: AxiosError) => {
+                    console.log(reason.message);
+                    openSnackbar(
+                        "error",
+                        "Failed to fetch employee details!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
+                });
+        } catch (error) {
+            console.log(error);
+            openSnackbar(
+                "error",
+                "Failed to fetch employee details due to an unknown error!"
+            );
+        }
+    };
+
+
     useEffect(() => {
-        const fetchEmployee = async () => {
-            const response = await fetch(`${BACKEND_API_URL}/api/Coach/${courseId}`);
-            const courses = await response.json();
-            setCourses({
-                id: courses.id,
-                name: courses.name,
-                age: courses.age,
-                rate: courses.rate,
-                gymId: courses.gymid,
-            });
-            setLoading(false);
-        };
         fetchEmployee();
     }, [courseId]);
 
@@ -49,22 +78,42 @@ export const CoachEdit = () => {
         event.preventDefault();
         try {
             await axios
-                .put(`${BACKEND_API_URL}/api/Coach/${courseId}`, courses)
+                .put(
+                    `${BACKEND_API_URL}/api/Coach/${courseId}`,
+                    courses,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
                 .then(() => {
-                    alert("Coach updated successfully!");
+                    openSnackbar("success", "Coach updated successfully!");
+                    navigate("/coaches");
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
-                    alert("Failed to update coach!");
+                    openSnackbar(
+                        "error",
+                        "Failed to update coach!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
                 });
         } catch (error) {
             console.log(error);
-            alert("Failed to update coach!");
+            openSnackbar(
+                "error",
+                "Failed to update coach due to an unknown error!"
+            );
         }
     };
 
+
     const handleCancel = (event: { preventDefault: () => void }) => {
         event.preventDefault();
+        navigate("/coaches");
     };
 
     return (

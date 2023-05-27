@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MPP.Database;
 using MPP.DTOs;
@@ -7,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Coach")]
     [ApiController]
     public class CoachController : ControllerBase
     {
@@ -19,6 +20,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Coach>>> GetAllPages(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Coaches
@@ -29,6 +31,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CoachDTO>>> GetAll()
         {    
             return await _dbContext.Coaches
@@ -37,6 +40,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Coach>> GetById(int id)
         {
             if (_dbContext.Coaches == null)
@@ -57,6 +61,11 @@ namespace MPP.Controllers
         [HttpPost]
         public async Task<ActionResult<CoachDTO>> Create(CoachDTO coachDTO)
         {
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
             // Validation
             if (coachDTO.Rate<1)
                 return BadRequest("!ERROR! Invalid Rate!"); 
@@ -67,7 +76,7 @@ namespace MPP.Controllers
                 Age = coachDTO.Age,
                 Rate = coachDTO.Rate,
                 GymId = coachDTO.GymId,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
             _dbContext.Coaches.Add(coach);
             await _dbContext.SaveChangesAsync();
@@ -93,6 +102,13 @@ namespace MPP.Controllers
             { 
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && coach.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
 
             coach.Name = coachDTO.Name;
             coach.Age = coachDTO.Age;
@@ -123,12 +139,21 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && coach.UserId != extracted.Item1)
+                return Unauthorized("You can only delete your own entities.");
+
             _dbContext.Coaches.Remove(coach);
             await _dbContext.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpGet("count/{pageSize}")]
+        [AllowAnonymous]
         public async Task<int> GetTotalNumberOfPages(int pageSize = 10)
         {
             int total = await _dbContext.Coaches.CountAsync();

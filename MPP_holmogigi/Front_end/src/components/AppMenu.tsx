@@ -1,12 +1,40 @@
 import { Box, AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import { getAccount } from "../auth";
+import { getAccount, logOut } from "../auth";
+import { useContext } from "react";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { SnackbarContext } from "./SnackbarContext";
+import { AccessLevel } from "../models/User";
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export const AppMenu = () => {
+
+	const navigate = useNavigate();
+	const openSnackbar = useContext(SnackbarContext);
+
 	const location = useLocation();
 	const path = location.pathname;
+
+	const accountNameClick = (event: { preventDefault: () => void }) => {
+		event.preventDefault();
+
+		const account = getAccount();
+		if (account !== null) {
+			navigate(`/users/${account.id}/details`);
+		} else {
+			navigate("/users/login");
+		}
+	};
+
+	const logOutClick = (event: { preventDefault: () => void }) => {
+		event.preventDefault();
+
+		logOut();
+		navigate("/");
+		openSnackbar("info", "Logged out successfully!");
+	};
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -101,36 +129,70 @@ export const AppMenu = () => {
 					</Button>
 
 					<Box sx={{ flexGrow: 1 }} />
-
+					<IconButton
+						component={Link}
+						to={`/users/admin`}
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="school"
+						sx={{
+							mr: 0,
+							display:
+								getAccount()?.accessLevel === AccessLevel.Admin
+									? "inline-flex"
+									: "none",
+						}}
+					>
+					<LocalLibraryIcon />
+					
+					</IconButton>
 					<Button
 						variant="text"
-						to={'/users/${getAccount()?.id}/details'}
-						component={Link}
 						color="inherit"
-						sx={{ mr: 5 }}
-						//disabled={getAccount() === null}
-						startIcon={<LocalLibraryIcon />}>
-						{getAccount()?.name}
-					</Button>
-					<Button
-						variant="text"
-						to="/users/login"
-						component={Link}
-						color="inherit"
-						sx={{ mr: 5 }}
-						startIcon={<LocalLibraryIcon />}>
-						LOGIN
-					</Button>
+						sx={{ mr: 2 }}
+						onClick={accountNameClick}
+					>
+						{getAccount()?.name ?? "LOG IN"}
+					</Button>	
 					<Button
 						variant="text"
 						to="/users/register"
 						component={Link}
 						color="inherit"
-						sx={{ mr: 5 }}
-						startIcon={<LocalLibraryIcon />}>
+						sx={{
+							mr: 0,
+							display:
+								getAccount() !== null ? "none" : "inline-flex",
+						}}
+						>
 						REGISTER
 					</Button>
-					
+
+					<IconButton
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="school"
+						sx={{
+							mr: 0,
+							display:
+								getAccount() !== null ? "inline-flex" : "none",
+						}}
+						onClick={logOutClick}
+					>
+						<LogoutIcon />
+					</IconButton>
+
+					<Button
+						component={Link}
+						sx={{ mr: 3 }}
+						to={`/AImodel`}						
+						startIcon={<SmartToyIcon />}
+					>
+					AI
+					</Button>
+								
 				</Toolbar>
 			</AppBar>
 		</Box>

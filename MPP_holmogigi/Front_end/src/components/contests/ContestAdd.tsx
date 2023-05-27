@@ -8,19 +8,21 @@
 	TextField,
 } from "@mui/material";
 import { Container } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Contest } from "../../models/Contest";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { debounce } from "lodash";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const ContestAdd = () => {
 	const navigate = useNavigate();
-
+	const openSnackbar = useContext(SnackbarContext);
 	const [course, setCourse] = useState<Contest>({
 		datetime: "",
 		name: "",
@@ -32,14 +34,36 @@ export const ContestAdd = () => {
 	const addCourse = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		try {
-			await axios.post(`${BACKEND_API_URL}/api/BodyBuilders/contest`, course);
-			navigate("/contests");
+			await axios
+				.post(`${BACKEND_API_URL}/api/BodyBuilders/contest`, course, {
+					headers: {
+						Authorization: `Bearer ${getAuthToken()}`,
+					},
+				})
+				.then(() => {
+					openSnackbar("success", "Contest added successfully!");
+					navigate("/contests");
+				})
+				.catch((reason: AxiosError) => {
+					console.log(reason.message);
+					openSnackbar(
+						"error",
+						"Failed to add contests!\n" +
+						(String(reason.response?.data).length > 255
+							? reason.message
+							: reason.response?.data)
+					);
+				});
 		} catch (error) {
 			console.log(error);
-			alert("!ERROR! Invalid name or location (name.lenght > 2 && location.name > 2)!");
+			openSnackbar(
+				"error",
+				"Failed to add contests due to an unknown error!"
+			);
 		}
 	};
 
+	
 	return (
 		<Container>
 			<Card>

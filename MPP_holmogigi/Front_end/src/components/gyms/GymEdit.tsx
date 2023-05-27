@@ -12,15 +12,19 @@
     FormControl,
     InputLabel,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios, { AxiosError } from "axios";
 import { Gym } from "../../models/Gym";
 import { BACKEND_API_URL } from "../../constants";
+import { SnackbarContext } from "../SnackbarContext";
+import { getAuthToken } from "../../auth";
 
 export const GymEdit = () => {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const openSnackbar = useContext(SnackbarContext);
+    const [loading, setLoading] = useState(true);
     const { courseId } = useParams();
     const [courses, setCourses] = useState<Gym>({
         name: "",
@@ -29,40 +33,81 @@ export const GymEdit = () => {
         grade: 1,
     });
 
-    useEffect(() => {
-        const fetchEmployee = async () => {
-            const response = await fetch(`${BACKEND_API_URL}/api/Gym/${courseId}`);
-            const courses = await response.json();
-            setCourses({
-                id: courses.id,
-                name: courses.name,
-                location: courses.location,
-                memembership: courses.memembership,
-                grade: courses.grade,
-            });
-            setLoading(false);
-        };
-        fetchEmployee();
-    }, [courseId]);
+    const fetchEmployee = async () => {
+        setLoading(true);
+        try {
+            await axios
+                .get<Gym>(
+                    `${BACKEND_API_URL}/api/Gym/${courseId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    const employee = response.data;
+                    setCourses(employee);
+                    setLoading(false);
+                })
+                .catch((reason: AxiosError) => {
+                    console.log(reason.message);
+                    openSnackbar(
+                        "error",
+                        "Failed to fetch gym details!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
+                });
+        } catch (error) {
+            console.log(error);
+            openSnackbar(
+                "error",
+                "Failed to fetch gym details due to an unknown error!"
+            );
+        }
+    };
+
+
 
     const handleUpdate = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
         try {
             await axios
-                .put(`${BACKEND_API_URL}/api/Gym/${courseId}`, courses)
+                .put(
+                    `${BACKEND_API_URL}/api/Gym/${courseId}`,
+                    courses,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getAuthToken()}`,
+                        },
+                    }
+                )
                 .then(() => {
-                    alert("Gym updated successfully!");
+                    openSnackbar("success", "Gym updated successfully!");
+                    navigate("/courses");
                 })
                 .catch((reason: AxiosError) => {
                     console.log(reason.message);
-                    alert("Failed to update gym!");
+                    openSnackbar(
+                        "error",
+                        "Failed to update gym!\n" +
+                        (String(reason.response?.data).length > 255
+                            ? reason.message
+                            : reason.response?.data)
+                    );
                 });
         } catch (error) {
             console.log(error);
-            alert("Failed to update coach!");
+            openSnackbar(
+                "error",
+                "Failed to update gym due to an unknown error!"
+            );
         }
     };
 
+    
     const handleCancel = (event: { preventDefault: () => void }) => {
         event.preventDefault();
     };

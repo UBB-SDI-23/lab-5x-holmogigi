@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using MPP.Database;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 
 namespace MPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Gym")]
     [ApiController]
     public class GymController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> GetAll()
         {
             return await _dbContext.Gyms
@@ -29,6 +31,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> GetAllPages(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Gyms
@@ -39,6 +42,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{page}/{pageSize}/special")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetAllSpecial(int page = 0, int pageSize = 10)
         {
             return await _dbContext.Gyms
@@ -50,6 +54,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Gym>> GetById(int id)
         {
             if (_dbContext.Gyms == null)
@@ -68,6 +73,11 @@ namespace MPP.Controllers
         [HttpPost]
         public async Task<ActionResult<GymDTO>> Create(GymDTO gymDTO)
         {
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
             // Validation
             if (gymDTO.Grade>10 || gymDTO.Grade<1)
                 return BadRequest("!ERROR! Ivalid Grade!");
@@ -78,7 +88,7 @@ namespace MPP.Controllers
                 Location = gymDTO.Location,
                 Memembership = gymDTO.Memembership,
                 Grade = gymDTO.Grade,
-                UserId = 1
+                UserId = (int?)extracted.Item1,
             };
 
             _dbContext.Gyms.Add(gym);
@@ -93,14 +103,17 @@ namespace MPP.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, GymDTO gymDTO)
         {
-            if (id != gymDTO.Id)
-            {
-                return BadRequest();
-            }
-
+           
             var gym = await _dbContext.Gyms.FindAsync(id);
             if (gym == null)
                 return NotFound();
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && gym.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
 
             gym.Name = gymDTO.Name;
             gym.Location = gymDTO.Location;
@@ -131,6 +144,14 @@ namespace MPP.Controllers
             {
                 return NotFound();
             }
+
+            var extracted = UsersController.ExtractJWTToken(User);
+            if (extracted == null)
+                return Unauthorized("Invalid token.");
+
+            if (extracted.Item2 == AccessLevel.Regular && gym.UserId != extracted.Item1)
+                return Unauthorized("You can only update your own entities.");
+
             _dbContext.Gyms.Remove(gym);
             await _dbContext.SaveChangesAsync();
 
@@ -154,6 +175,7 @@ namespace MPP.Controllers
 
 
         [HttpGet("order/{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetGymAverageAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
@@ -179,6 +201,7 @@ namespace MPP.Controllers
         }
 
         [HttpGet("MinCoachAge/{page}/{pageSize}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gym>>> GetGymMiniAge(int page = 0, int pageSize = 10)
         {
             if (_dbContext.Gyms == null)
@@ -205,6 +228,7 @@ namespace MPP.Controllers
 
 
         [HttpGet("filter/{Grade}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GymDTO>>> FilterGrade(int Grade)
         {
             if (_dbContext.Gyms == null)

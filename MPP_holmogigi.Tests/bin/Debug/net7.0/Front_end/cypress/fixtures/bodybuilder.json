@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "testing",
+    "age": 20,
+    "weight": 80,
+    "height": 176,
+    "division": "testing"
+  },
+  {
+    "id": 2,
+    "name": "testing1",
+    "age": 28,
+    "weight": 90,
+    "height": 190,
+    "division": "testing1"
+  },
+  {
+    "id": 3,
+    "name": "testing2",
+    "age": 32,
+    "weight": 100,
+    "height": 190,
+    "division": "testing2"
+  }
+]
